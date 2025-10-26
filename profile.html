@@ -255,72 +255,68 @@
     </div>
 
     <!-- Header (Same as index.html) -->
-    <nav class="sticky top-0 bg-white backdrop-blur-xl shadow-lg z-50 transition-all duration-300 border-b border-gray-200/50" id="navbar">
+    <!-- Navigation - Desktop -->
+    <nav class="hidden md:block sticky top-0 bg-white backdrop-blur-xl shadow-lg z-50 transition-all duration-300 border-b border-gray-200/50" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div class="flex justify-between items-center h-[100px] md:h-[100px]">
-                <!-- Logo -->
-<a href="index.html" class="">
-  <div class="w-100 h-100 md:w-80 pt-4 md:h-20 bg-transparent rounded-xl flex items-center justify-center ">
-    <img src="public/krambicalogo.png" alt="Krambica Logo" class="w-full h-full object-cover" />
-  </div>
-</a>
+            <div class="flex justify-between items-center h-20 lg:h-24">
+                <a href="index.html" class="">
+                    <div class="w-32 h-16 lg:w-40 lg:h-20 bg-transparent rounded-xl flex items-center justify-center">
+                        <img src="public/krambicalogo.png" alt="Krambica Logo" class="w-full h-full object-contain" />
+                    </div>
+                </a>
 
-
-
-                <!-- Desktop Menu -->
-                <div class="hidden lg:flex items-center space-x-10">
-                     <a href="index.html" class="text-primary font-semibold text-base relative group py-2">
+                <div class="hidden lg:flex items-center space-x-8 xl:space-x-10">
+                    <a href="index.html" data-page="index.html" class="nav-link text-gray-700 hover:text-primary font-semibold text-sm xl:text-base relative group py-2 transition-colors duration-300">
                         Home
-                        <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full"></span>
+                        <span class="nav-underline absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="products.html" class="text-primary font-semibold text-base relative group py-2">
+                    <a href="products.html" data-page="products.html" class="nav-link text-gray-700 hover:text-primary font-semibold text-sm xl:text-base relative group py-2 transition-colors duration-300">
                         Shop
-                        <span class="absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full"></span>
+                        <span class="nav-underline absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="collections.html" class="text-gray-700 hover:text-primary font-semibold text-base relative group py-2 transition-colors duration-300">
+                    <a href="collections.html" data-page="collections.html" class="nav-link text-gray-700 hover:text-primary font-semibold text-sm xl:text-base relative group py-2 transition-colors duration-300">
                         Collection
-                        <span class="absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                        <span class="nav-underline absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="sale.html" class="text-gray-700 hover:text-primary font-semibold text-base relative group py-2 transition-colors duration-300">
+                    <a href="sale.html" data-page="sale.html" class="nav-link text-primary font-semibold text-sm xl:text-base relative group py-2 transition-colors duration-300">
                         Offer
-                        <span class="absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                        <span class="nav-underline absolute -bottom-1 left-0 w-full h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300"></span>
                     </a>
-                    <a href="about.html" class="text-gray-700 hover:text-primary font-semibold text-base relative group py-2 transition-colors duration-300">
+                    <a href="about.html" data-page="about.html" class="nav-link text-gray-700 hover:text-primary font-semibold text-sm xl:text-base relative group py-2 transition-colors duration-300">
                         About Us
-                        <span class="absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                        <span class="nav-underline absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
                     </a>
-                    <a href="contact.html" class="text-gray-700 hover:text-primary font-semibold text-base relative group py-2 transition-colors duration-300">
+                    <a href="contact.html" data-page="contact.html" class="nav-link text-gray-700 hover:text-primary font-semibold text-sm xl:text-base relative group py-2 transition-colors duration-300">
                         Contact Us
-                        <span class="absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
+                        <span class="nav-underline absolute -bottom-1 left-0 w-0 h-1 bg-gradient-to-r from-primary to-teal-600 rounded-full transition-all duration-300 group-hover:w-full"></span>
                     </a>
                 </div>
 
-                <!-- Icons -->
-                <div class="flex items-center space-x-4 md:space-x-6">
-                    <button onclick="openSearch()" aria-label="Search" class="hidden md:flex items-center justify-center w-10 h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="flex items-center space-x-3 md:space-x-4 lg:space-x-6">
+                    <button onclick="openSearch()" aria-label="Search" class="hidden md:flex items-center justify-center w-9 h-9 lg:w-10 lg:h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
+                        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </button>
-                    <button onclick="window.location.href='profile.html'" aria-label="Account" class="flex items-center justify-center w-10 h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button onclick="window.location.href='profile.html'" aria-label="Account" class="flex items-center justify-center w-9 h-9 lg:w-10 lg:h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
+                        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
                     </button>
-                    <button onclick="window.location.href='wishlist.html'" aria-label="Wishlist" class="relative group flex items-center justify-center w-10 h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button onclick="window.location.href='wishlist.html'" aria-label="Wishlist" class="relative group flex items-center justify-center w-9 h-9 lg:w-10 lg:h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
+                        <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
-                        <span class="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full font-bold shadow-lg transform transition-all duration-300 group-hover:scale-110">0</span>
+                        <span class="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs w-5 h-5 lg:w-6 lg:h-6 flex items-center justify-center rounded-full font-bold shadow-lg transform transition-all duration-300 group-hover:scale-110">0</span>
                     </button>
-                    <button onclick="window.location.href='cart.html'" aria-label="Cart" class="relative group flex items-center justify-center w-10 h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
-                        <svg class="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button onclick="window.location.href='cart.html'" aria-label="Cart" class="relative group flex items-center justify-center w-10 h-10 lg:w-12 lg:h-12 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
+                        <svg class="w-6 h-6 lg:w-7 lg:h-7 transform group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                         </svg>
-                        <span id="cart-count" class="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs w-6 h-6 flex items-center justify-center rounded-full font-bold shadow-lg transform transition-all duration-300 group-hover:scale-110">0</span>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-pink-600 text-white text-xs w-6 h-6 lg:w-7 lg:h-7 flex items-center justify-center rounded-full font-bold shadow-lg transform transition-all duration-300 group-hover:scale-110">0</span>
                     </button>
-                    <button id="mobile-menu-toggle" class="lg:hidden flex items-center justify-center w-10 h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300" aria-label="Menu">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button id="mobile-menu-toggle" class="lg:hidden flex items-center justify-center w-9 h-9 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300" aria-label="Menu">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
@@ -330,34 +326,136 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-200">
-            <div class="px-6 py-8 space-y-6 bg-white">
-                <a href="index.html" class="flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-lg transition-colors">
-                    <span class="w-2 h-2 bg-transparent group-hover:bg-primary rounded-full transition-colors"></span>
+            <div class="px-6 py-6 space-y-5 bg-white">
+                <a href="index.html" data-page="index.html" class="mobile-nav-link flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-base transition-colors">
+                    <span class="mobile-nav-dot w-2 h-2 bg-transparent rounded-full transition-colors"></span>
                     <span>Home</span>
                 </a>
-                <a href="products.html" class="flex items-center space-x-3 text-primary font-bold text-lg">
-                    <span class="w-2 h-2 bg-primary rounded-full"></span>
+                <a href="products.html" data-page="products.html" class="mobile-nav-link flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-base transition-colors">
+                    <span class="mobile-nav-dot w-2 h-2 bg-transparent rounded-full transition-colors"></span>
                     <span>Shop</span>
                 </a>
-                <a href="#collections" class="flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-lg transition-colors">
-                    <span class="w-2 h-2 bg-transparent group-hover:bg-primary rounded-full transition-colors"></span>
+                <a href="collections.html" data-page="collections.html" class="mobile-nav-link flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-base transition-colors">
+                    <span class="mobile-nav-dot w-2 h-2 bg-transparent rounded-full transition-colors"></span>
                     <span>Collection</span>
                 </a>
-                <a href="#offers" class="flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-lg transition-colors">
-                    <span class="w-2 h-2 bg-transparent group-hover:bg-primary rounded-full transition-colors"></span>
+                <a href="sale.html" data-page="sale.html" class="mobile-nav-link flex items-center space-x-3 text-primary font-bold transition-colors">
+                    <span class="mobile-nav-dot w-2 h-2 bg-primary rounded-full transition-colors"></span>
                     <span>Offer</span>
                 </a>
-                <a href="about.html" class="flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-lg transition-colors">
-                    <span class="w-2 h-2 bg-transparent group-hover:bg-primary rounded-full transition-colors"></span>
+                <a href="about.html" data-page="about.html" class="mobile-nav-link flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-base transition-colors">
+                    <span class="mobile-nav-dot w-2 h-2 bg-transparent rounded-full transition-colors"></span>
                     <span>About Us</span>
                 </a>
-                <a href="contact.html" class="flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-lg transition-colors">
-                    <span class="w-2 h-2 bg-transparent group-hover:bg-primary rounded-full transition-colors"></span>
+                <a href="contact.html" data-page="contact.html" class="mobile-nav-link flex items-center space-x-3 text-gray-700 hover:text-primary font-semibold text-base transition-colors">
+                    <span class="mobile-nav-dot w-2 h-2 bg-transparent rounded-full transition-colors"></span>
                     <span>Contact Us</span>
                 </a>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Top Header - Optimized for 320px-425px -->
+ <!-- Mobile Header -->
+    <div class="md:hidden sticky top-0 bg-white shadow-md z-50 border-b border-gray-200">
+        <div class="flex items-center justify-between h-16 px-3">
+            <a href="index.html" class="flex-shrink-0">
+                <div class="flex items-center gap-2">
+                    <div class="w-20 h-8 bg-transparent flex items-center justify-center">
+                        <img src="public/krambicalogo.png" alt="Krambica Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-lg font-bold text-primary\'>KRAMBICA</span>'" />
+                    </div>
+                </div>
+            </a>
+            
+            <div class="flex items-center gap-1.5">
+                <button onclick="openSearch()" aria-label="Search" class="mobile-tap-feedback flex items-center justify-center w-9 h-9 rounded-full text-gray-700 hover:bg-primary/10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </button>
+                
+                <button onclick="window.location.href='wishlist.html'" aria-label="Wishlist" class="mobile-tap-feedback relative flex items-center justify-center w-9 h-9 rounded-full text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                    <span id="mobile-wishlist-count" class="absolute -top-0.5 -right-0.5 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold shadow-md">0</span>
+                </button>
+                
+                <button onclick="window.location.href='cart.html'" aria-label="Cart" class="mobile-tap-feedback relative flex items-center justify-center w-10 h-10 rounded-full text-gray-700">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                    </svg>
+                    <span id="mobile-cart-count" class="absolute -top-0.5 -right-0.5 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold shadow-md">0</span>
+                </button>
+                
+                <button id="mobile-menu-toggle-btn" onclick="openMobileMenu()" class="mobile-tap-feedback flex items-center justify-center w-9 h-9 rounded-full text-gray-700" aria-label="Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu-drawer" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeMobileMenu()"></div>
+        <div class="drawer-content absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between z-10">
+                <h2 class="text-xl font-bold text-gray-900">Menu</h2>
+                <button onclick="closeMobileMenu()" class="p-2 hover:bg-gray-100 rounded-full transition-all">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="p-6 space-y-1">
+                <a href="index.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-xl transition-all font-semibold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="products.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-xl transition-all font-semibold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                    </svg>
+                    <span>Shop</span>
+                </a>
+                <a href="collections.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-xl transition-all font-semibold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                    <span>Collection</span>
+                </a>
+                <a href="sale.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-xl transition-all font-semibold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+                    </svg>
+                    <span>Offer</span>
+                </a>
+                <a href="about.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-xl transition-all font-semibold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span>About Us</span>
+                </a>
+                <a href="contact.html" class="flex items-center space-x-3 px-4 py-3 bg-primary/10 text-primary rounded-xl transition-all font-bold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    <span>Contact Us</span>
+                </a>
+                <a href="profile.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary/10 hover:text-primary rounded-xl transition-all font-semibold">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
+                    <span>My Account</span>
+                </a>
+            </div>
+        </div>
+    </div>
 
     <!-- Profile Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -1483,42 +1581,43 @@
     </script>
 
     <!-- Mobile Bottom Navigation (App-like) -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-lg z-50" style="padding-bottom: env(safe-area-inset-bottom);">
-        <div class="flex items-center justify-around py-2">
-            <!-- Home -->
-            <a href="index.html" class="mobile-nav-item flex flex-col items-center justify-center px-4 py-2 text-gray-600">
-                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-                <span class="text-xs font-semibold">Home</span>
-            </a>
-
-            <!-- Products -->
-            <a href="products.html" class="mobile-nav-item flex flex-col items-center justify-center px-4 py-2 text-gray-600">
-                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                </svg>
-                <span class="text-xs font-semibold">Products</span>
-            </a>
-
-            <!-- Sale -->
-            <a href="sale.html" class="mobile-nav-item flex flex-col items-center justify-center px-4 py-2 text-gray-600 relative">
-                <div class="absolute -top-1 right-2 bg-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full">HOT</div>
-                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                </svg>
-                <span class="text-xs font-semibold">Sale</span>
-            </a>
-
-            <!-- Profile -->
-            <a href="profile.html" class="mobile-nav-item flex flex-col items-center justify-center px-4 py-2 text-primary">
-                <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                </svg>
-                <span class="text-xs font-semibold">Profile</span>
-            </a>
-        </div>
-    </nav>
+ <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-lg z-50 safe-area-bottom mobile-bottom-nav">
+    <div class="flex justify-around items-center py-2">
+        <a href="index.html" class="bottom-nav-item ripple" data-nav="home">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span class="text-[10px] font-semibold mt-1">Home</span>
+        </a>
+        <a href="products.html" class="bottom-nav-item ripple" data-nav="shop">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+            <span class="text-[10px] font-semibold mt-1">Shop</span>
+        </a>
+        <a href="cart.html" class="bottom-nav-item ripple" data-nav="collections">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+            </svg>
+            <span class="text-[10px] font-semibold mt-1">cart</span>
+        </a>
+        <a href="collections.html" class="bottom-nav-item ripple" data-nav="wishlist">
+            <div class="relative">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+                <span id="bottom-wishlist-badge" class="absolute -top-2 -right-2 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold shadow-md hidden">0</span>
+            </div>
+            <span class="text-[10px] font-semibold mt-1">collections</span>
+        </a>
+        <a href="profile.html" class="bottom-nav-item ripple" data-nav="profile">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            </svg>
+            <span class="text-[10px] font-semibold mt-1">Profile</span>
+        </a>
+    </div>
+</nav>
 
     <style>
         /* Mobile Bottom Navigation Styles */
@@ -1698,6 +1797,129 @@
             if (e.key === 'Escape') {
                 closeSearch();
             }
+        });
+    </script>
+    <script>
+        // Search Functions
+        function openSearch() {
+            document.getElementById('searchOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                document.getElementById('searchInput').focus();
+            }, 100);
+        }
+
+        function closeSearch(event) {
+            if (!event || event.target.id === 'searchOverlay') {
+                document.getElementById('searchOverlay').classList.remove('active');
+                document.body.style.overflow = 'auto';
+                document.getElementById('searchInput').value = '';
+                document.getElementById('searchResults').innerHTML = '';
+            }
+        }
+
+        function handleSearch(value) {
+            console.log('Searching for:', value);
+            // Implement your search logic here
+        }
+
+        function filterByCategory(category, element) {
+            document.querySelectorAll('.category-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            element.classList.add('active');
+            console.log('Filter by:', category);
+        }
+
+        // Mobile Menu Functions
+        function openMobileMenu() {
+            const drawer = document.getElementById('mobile-menu-drawer');
+            drawer.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                drawer.classList.add('show');
+            }, 10);
+        }
+
+        function closeMobileMenu() {
+            const drawer = document.getElementById('mobile-menu-drawer');
+            drawer.classList.remove('show');
+            setTimeout(() => {
+                drawer.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 300);
+        }
+
+        // Form Submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const btn = event.target.querySelector('button[type="submit"]');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const btnSpinner = document.getElementById('btnSpinner');
+            
+            // Show loading state
+            btnText.textContent = 'Sending...';
+            btnIcon.classList.add('hidden');
+            btnSpinner.classList.remove('hidden');
+            btn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                // Reset button
+                btnText.textContent = 'Send Message';
+                btnIcon.classList.remove('hidden');
+                btnSpinner.classList.add('hidden');
+                btn.disabled = false;
+                
+                // Show success message
+                showAlert('Message sent successfully! We\'ll get back to you soon.', 'success');
+                
+                // Reset form
+                event.target.reset();
+            }, 2000);
+        }
+
+        // Alert Function
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            const alertMessage = document.getElementById('alertMessage');
+            
+            alertMessage.textContent = message;
+            alertBox.className = `alert alert-${type} show`;
+            
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 5000);
+        }
+
+        // FAQ Toggle
+        function toggleFAQ(element) {
+            const isActive = element.classList.contains('active');
+            
+            // Close all FAQs
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Open clicked FAQ if it wasn't already open
+            if (!isActive) {
+                element.classList.add('active');
+            }
+        }
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSearch();
+                closeMobileMenu();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Contact page loaded');
         });
     </script>
 </body>

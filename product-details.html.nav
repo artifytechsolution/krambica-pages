@@ -801,20 +801,7 @@
         </div>
     </nav>
 
-    <!-- Breadcrumb -->
-    <div class="bg-white border-b">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <nav class="flex text-sm">
-                <a href="index.html" class="text-gray-500 hover:text-primary">Home</a>
-                <span class="mx-2 text-gray-400">/</span>
-                <a href="products.html" class="text-gray-500 hover:text-primary">Products</a>
-                <span class="mx-2 text-gray-400">/</span>
-                <a href="#" class="text-gray-500 hover:text-primary">Dresses</a>
-                <span class="mx-2 text-gray-400">/</span>
-                <span class="text-gray-900 font-medium">Floral Summer Dress</span>
-            </nav>
-        </div>
-    </div>
+    
 
     <!-- Product Details Section -->
     <section class="py-6 sm:py-8 lg:py-12">

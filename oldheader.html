@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Krambica - Responsive Header</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .logo-font {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Desktop Nav Links */
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: #991B1B;
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Icon Buttons */
+    .icon-btn {
+      transition: all 0.3s ease;
+    }
+
+    .icon-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Badge Animation */
+    .badge {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.8;
+      }
+    }
+
+    /* Sticky Header */
+    .header-sticky {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: white;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    /* Mobile Tap Feedback */
+    .mobile-tap-feedback {
+      -webkit-tap-highlight-color: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .mobile-tap-feedback:active {
+      transform: scale(0.95);
+      opacity: 0.7;
+    }
+
+    /* Mobile Menu Drawer Animation */
+    #mobile-menu-drawer {
+      transition: opacity 0.3s ease;
+    }
+
+    #mobile-menu-drawer.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .drawer-content {
+      transform: translateX(100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #mobile-menu-drawer.active .drawer-content {
+      transform: translateX(0);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Search Overlay */
+    .search-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .search-overlay.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .search-popup {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 700px;
+      margin-top: 60px;
+      max-height: calc(100vh - 100px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .search-popup {
+        margin-top: 20px;
+        border-radius: 12px;
+      }
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: #991B1B;
+      box-shadow: 0 0 0 3px rgba(153, 27, 27, 0.1);
+    }
+
+    .category-chip {
+      padding: 8px 16px;
+      background: #f3f4f6;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #4b5563;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+      border: 2px solid transparent;
+    }
+
+    .category-chip:hover {
+      background: #e5e7eb;
+      transform: translateY(-2px);
+    }
+
+    .category-chip.active {
+      background: #991B1B;
+      color: white;
+      border-color: #991B1B;
+    }
+
+    .search-content {
+      padding: 16px;
+      overflow-y: auto;
+      max-height: 400px;
+    }
+
+    .search-result-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      gap: 12px;
+    }
+
+    .search-result-item:hover {
+      background: #f9fafb;
+      transform: translateX(4px);
+    }
+
+    .product-image-placeholder {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+      border-radius: 8px;
+      flex-shrink: 0;
+    }
+
+    /* Scrollbar Styling */
+    .search-content::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .search-content::-webkit-scrollbar-track {
+      background: #f3f4f6;
+      border-radius: 10px;
+    }
+
+    .search-content::-webkit-scrollbar-thumb {
+      background: #991B1B;
+      border-radius: 10px;
+    }
+
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+      .search-overlay {
+        padding: 0;
+      }
+      
+      .search-popup {
+        border-radius: 0;
+        margin-top: 0;
+        max-height: 100vh;
+        height: 100vh;
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+
+  <!-- Desktop Header (Hidden on Mobile) -->
+  <header class="hidden md:block header-sticky">
+    <div class="bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Top Section: Logo Centered with Icons on Right -->
+        <div class="flex justify-between items-center py-6">
+          <!-- Spacer for alignment -->
+          <div class="w-32 lg:w-40"></div>
+          
+          <!-- Centered Logo -->
+          <a href="index.html" class="flex-shrink-0">
+            <div class="text-center">
+              <h1 class="logo-font text-4xl lg:text-5xl font-semibold text-red-900 relative inline-block">
+                Krambica
+                <sup class="text-xs absolute -top-2">®</sup>
+              </h1>
+            </div>
+          </a>
+
+          <!-- Right Icons -->
+          <div class="flex items-center space-x-4">
+            <button onclick="openSearch()" class="icon-btn p-2" aria-label="Search">
+              <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </button>
+
+            <button onclick="window.location.href='profile.html'" class="icon-btn p-2" aria-label="Account">
+              <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+            </button>
+            
+            <button onclick="window.location.href='wishlist.html'" class="icon-btn relative p-2" aria-label="Wishlist">
+              <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+              <span id="wishlist-count" class="badge absolute -top-1 -right-1 bg-red-900 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full font-medium text-[10px]">0</span>
+            </button>
+
+            <button onclick="window.location.href='cart.html'" class="icon-btn relative p-2" aria-label="Cart">
+              <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              <span id="cart-count" class="badge absolute -top-1 -right-1 bg-red-900 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full font-medium text-[10px]">3</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Menu -->
+        <nav class="border-t border-gray-100">
+          <div class="flex justify-center items-center space-x-8 lg:space-x-12 py-4">
+            <a href="index.html" class="nav-link text-sm font-medium text-gray-700 hover:text-red-900 pb-1">
+              Home
+            </a>
+            <a href="products.html" class="nav-link text-sm font-medium text-gray-700 hover:text-red-900 pb-1">
+              Shop
+            </a>
+            <a href="collections.html" class="nav-link text-sm font-medium text-gray-700 hover:text-red-900 pb-1">
+              Collection
+            </a>
+            <a href="sale.html" class="nav-link active text-sm font-medium text-red-900 pb-1">
+              Offer
+            </a>
+            <a href="about.html" class="nav-link text-sm font-medium text-gray-700 hover:text-red-900 pb-1">
+              About
+            </a>
+            <a href="contact.html" class="nav-link text-sm font-medium text-gray-700 hover:text-red-900 pb-1">
+              Contact
+            </a>
+          </div>
+        </nav>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Header (Visible only on Mobile) -->
+  <div class="md:hidden sticky top-0 bg-white shadow-md z-50 border-b border-gray-200">
+    <div class="flex items-center justify-between h-16 px-3">
+      <a href="index.html" class="flex-shrink-0">
+        <div class="flex items-center gap-2">
+          <div class="w-20 h-8 bg-transparent flex items-center justify-center">
+            <h1 class="logo-font text-2xl font-semibold text-red-900">
+              Krambica<sup class="text-[8px]">®</sup>
+            </h1>
+          </div>
+        </div>
+      </a>
+      
+      <div class="flex items-center gap-1.5">
+        <button onclick="openSearch()" aria-label="Search" class="mobile-tap-feedback flex items-center justify-center w-9 h-9 rounded-full text-gray-700 hover:bg-red-50">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+        </button>
+        
+        <button onclick="window.location.href='wishlist.html'" aria-label="Wishlist" class="mobile-tap-feedback relative flex items-center justify-center w-9 h-9 rounded-full text-gray-700">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+          <span id="mobile-wishlist-count" class="badge absolute -top-0.5 -right-0.5 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold shadow-md">0</span>
+        </button>
+        
+        <button onclick="window.location.href='cart.html'" aria-label="Cart" class="mobile-tap-feedback relative flex items-center justify-center w-10 h-10 rounded-full text-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span id="mobile-cart-count" class="badge absolute -top-0.5 -right-0.5 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold shadow-md">3</span>
+        </button>
+        
+        <button id="mobile-menu-toggle-btn" onclick="openMobileMenu()" class="mobile-tap-feedback flex items-center justify-center w-9 h-9 rounded-full text-gray-700" aria-label="Menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu Drawer -->
+  <div id="mobile-menu-drawer" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeMobileMenu()"></div>
+    <div class="drawer-content absolute top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl overflow-y-auto">
+      <div class="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between z-10">
+        <h2 class="text-xl font-bold text-gray-900">Menu</h2>
+        <button onclick="closeMobileMenu()" class="p-2 hover:bg-gray-100 rounded-full transition-all">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="p-6 space-y-1">
+        <a href="index.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-900 rounded-xl transition-all font-semibold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          <span>Home</span>
+        </a>
+        <a href="products.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-900 rounded-xl transition-all font-semibold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+          <span>Shop</span>
+        </a>
+        <a href="collections.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-900 rounded-xl transition-all font-semibold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+          <span>Collection</span>
+        </a>
+        <a href="sale.html" class="flex items-center space-x-3 px-4 py-3 bg-red-50 text-red-900 rounded-xl transition-all font-bold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+          </svg>
+          <span>Offer</span>
+        </a>
+        <a href="about.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-900 rounded-xl transition-all font-semibold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span>About</span>
+        </a>
+        <a href="contact.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-900 rounded-xl transition-all font-semibold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+          <span>Contact</span>
+        </a>
+        <a href="profile.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-900 rounded-xl transition-all font-semibold">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+          </svg>
+          <span>My Account</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Overlay -->
+  <div id="searchOverlay" class="search-overlay" onclick="closeSearchOnBackdrop(event)">
+    <div class="search-popup" onclick="event.stopPropagation()">
+      <div class="p-4 md:p-6">
+        <div class="flex items-center gap-2 md:gap-3 mb-4">
+          <svg class="w-5 h-5 md:w-6 md:h-6 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" id="searchInput" class="search-input flex-1" placeholder="Search for products..." oninput="handleSearch(this.value)" autofocus />
+          <button onclick="closeSearch()" class="p-2 hover:bg-gray-100 rounded-full transition-all flex-shrink-0">
+            <svg class="w-5 h-5 md:w-6 md:h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <div class="category-chip active" onclick="filterByCategory('all', this)" data-category="all">
+            <span>All</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('vegetables', this)" data-category="vegetables">
+            <span>🥦 Vegetables</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('fruits', this)" data-category="fruits">
+            <span>🍎 Fruits</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('dairy', this)" data-category="dairy">
+            <span>🥛 Dairy</span>
+          </div>
+          <div class="category-chip" onclick="filterByCategory('organic', this)" data-category="organic">
+            <span>🌱 Organic</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="search-content" id="searchResults">
+        <div class="text-center text-gray-500 py-8">
+          <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <p>Start typing to search products...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Demo Content -->
+
+  <script>
+    // Sample products data
+    const products = [
+      { id: 1, name: 'Fresh Tomatoes', category: 'vegetables', price: '₹80/kg' },
+      { id: 2, name: 'Organic Spinach', category: 'vegetables', price: '₹40/bunch' },
+      { id: 3, name: 'Red Apples', category: 'fruits', price: '₹150/kg' },
+      { id: 4, name: 'Bananas', category: 'fruits', price: '₹60/dozen' },
+      { id: 5, name: 'Fresh Milk', category: 'dairy', price: '₹50/liter' },
+      { id: 6, name: 'Greek Yogurt', category: 'dairy', price: '₹120/500g' },
+      { id: 7, name: 'Organic Carrots', category: 'organic', price: '₹90/kg' },
+      { id: 8, name: 'Organic Honey', category: 'organic', price: '₹450/500g' },
+      { id: 9, name: 'Bell Peppers', category: 'vegetables', price: '₹100/kg' },
+      { id: 10, name: 'Strawberries', category: 'fruits', price: '₹200/pack' }
+    ];
+
+    let currentCategory = 'all';
+
+    // Mobile Menu Functions
+    function openMobileMenu() {
+      const drawer = document.getElementById('mobile-menu-drawer');
+      drawer.classList.remove('hidden');
+      drawer.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileMenu() {
+      const drawer = document.getElementById('mobile-menu-drawer');
+      drawer.classList.remove('active');
+      setTimeout(() => {
+        drawer.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 300);
+    }
+
+    // Search Functions
+    function openSearch() {
+      const overlay = document.getElementById('searchOverlay');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        document.getElementById('searchInput').focus();
+      }, 100);
+    }
+
+    function closeSearch() {
+      const overlay = document.getElementById('searchOverlay');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchResults').innerHTML = `
+        <div class="text-center text-gray-500 py-8">
+          <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <p>Start typing to search products...</p>
+        </div>
+      `;
+    }
+
+    function closeSearchOnBackdrop(event) {
+      if (event.target === event.currentTarget) {
+        closeSearch();
+      }
+    }
+
+    // Category Filter
+    function filterByCategory(category, element) {
+      currentCategory = category;
+      
+      // Update active chip
+      document.querySelectorAll('.category-chip').forEach(chip => {
+        chip.classList.remove('active');
+      });
+      element.classList.add('active');
+
+      // Trigger search with current input
+      const searchValue = document.getElementById('searchInput').value;
+      handleSearch(searchValue);
+    }
+
+    // Search Handler
+    function handleSearch(query) {
+      const resultsContainer = document.getElementById('searchResults');
+      
+      if (!query.trim()) {
+        resultsContainer.innerHTML = `
+          <div class="text-center text-gray-500 py-8">
+            <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <p>Start typing to search products...</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Filter products
+      let filteredProducts = products.filter(product => {
+        const matchesSearch = product.name.toLowerCase().includes(query.toLowerCase());
+        const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
+        return matchesSearch && matchesCategory;
+      });
+
+      if (filteredProducts.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class="text-center text-gray-500 py-8">
+            <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <p class="font-semibold mb-1">No products found</p>
+            <p class="text-sm">Try different keywords or category</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Display results
+      resultsContainer.innerHTML = filteredProducts.map(product => `
+        <div class="search-result-item" onclick="window.location.href='product.html?id=${product.id}'">
+          <div class="product-image-placeholder"></div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-gray-900">${product.name}</h4>
+            <p class="text-sm text-gray-500 capitalize">${product.category}</p>
+            <p class="text-red-900 font-bold mt-1">${product.price}</p>
+          </div>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </div>
+      `).join('');
+    }
+
+    // Update cart and wishlist counts
+    function updateCounts() {
+      const cartItems = localStorage.getItem('cartItems') || '3';
+      const wishlistItems = localStorage.getItem('wishlistItems') || '0';
+      
+      // Desktop counts
+      document.getElementById('cart-count').textContent = cartItems;
+      document.getElementById('wishlist-count').textContent = wishlistItems;
+      
+      // Mobile counts
+      document.getElementById('mobile-cart-count').textContent = cartItems;
+      document.getElementById('mobile-wishlist-count').textContent = wishlistItems;
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function(event) {
+      // ESC to close
+      if (event.key === 'Escape') {
+        closeSearch();
+        closeMobileMenu();
+      }
+      
+      // Ctrl/Cmd + K to open search
+      if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+        event.preventDefault();
+        openSearch();
+      }
+    });
+
+    // Initialize on page load
+    window.addEventListener('load', function() {
+      updateCounts();
+    });
+
+    // Prevent body scroll when menu is open
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.attributeName === 'class') {
+          const drawer = document.getElementById('mobile-menu-drawer');
+          const overlay = document.getElementById('searchOverlay');
+          if (drawer.classList.contains('active') || overlay.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+          } else {
+            document.body.style.overflow = '';
+          }
+        }
+      });
+    });
+
+    observer.observe(document.getElementById('mobile-menu-drawer'), {
+      attributes: true
+    });
+  </script>
+
+</body>
+</html>
