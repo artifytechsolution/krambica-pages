@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Store - Shop the looks you've been waiting for</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .product-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+        
+        .scroll-container {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans antialiased">
+    <div class="container mx-auto px-4 py-8 lg:py-16">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
+            <!-- Left Hero Section -->
+            <div class="w-full lg:w-1/3 text-center lg:text-left">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-normal leading-tight mb-6">
+                    Shop the looks you've been waiting for.
+                </h1>
+                <p class="text-gray-600 text-lg mb-8">
+                    From catalogue to closet.
+                </p>
+                <button class="bg-red-400 hover:bg-red-500 text-white font-medium px-12 py-4 rounded-full text-sm uppercase tracking-wider transition-colors duration-300 shadow-lg">
+                    Shop Now
+                </button>
+            </div>
+
+            <!-- Right Product Section - Desktop -->
+            <div class="hidden lg:flex w-full lg:w-2/3 gap-4 relative">
+                <!-- Navigation Buttons -->
+                <button onclick="scrollProducts('left')" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                
+                <div id="productContainer" class="flex gap-4 overflow-x-auto scroll-smooth scroll-container">
+                    <!-- Product 1 -->
+                    <div class="min-w-[280px] flex-shrink-0 product-card">
+                        <div class="relative bg-gray-200 rounded-lg overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&h=700&fit=crop" 
+                                 alt="Orange Tissue Embroidered Suit" 
+                                 class="w-full h-[400px] object-cover">
+                            
+                            <!-- Heart Icon -->
+                            <button class="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            
+                            <!-- New Season Badge -->
+                            <div class="absolute bottom-4 left-4 bg-black text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+                                New Season
+                            </div>
+                            
+                            <!-- Shopping Bag Icon -->
+                            <button class="absolute bottom-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">Orange Tissue Embroidered Suit Set With Sequins</h3>
+                            <p class="text-lg font-semibold text-gray-900">₹9,998</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="min-w-[280px] flex-shrink-0 product-card">
+                        <div class="relative bg-gray-200 rounded-lg overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500&h=700&fit=crop" 
+                                 alt="Wine Chinon Embroidered Suit" 
+                                 class="w-full h-[400px] object-cover">
+                            
+                            <button class="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            
+                            <div class="absolute bottom-4 left-4 bg-black text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+                                New Season
+                            </div>
+                            
+                            <button class="absolute bottom-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">Wine Chinon Embroidered Suit Set With Zari</h3>
+                            <p class="text-lg font-semibold text-gray-900">₹7,998</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="min-w-[280px] flex-shrink-0 product-card">
+                        <div class="relative bg-gray-200 rounded-lg overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=500&h=700&fit=crop" 
+                                 alt="Black Dola Silk Woven Design Suit" 
+                                 class="w-full h-[400px] object-cover">
+                            
+                            <button class="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            
+                            <div class="absolute bottom-4 left-4 bg-black text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+                                New Season
+                            </div>
+                            
+                            <button class="absolute bottom-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">Black Dola Silk Woven Design Suit Set With Mirror Work</h3>
+                            <p class="text-lg font-semibold text-gray-900">₹8,998</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="min-w-[280px] flex-shrink-0 product-card">
+                        <div class="relative bg-gray-200 rounded-lg overflow-hidden group">
+                            <img src="https://images.unsplash.com/photo-1617019114583-affb34d1b3cd?w=500&h=700&fit=crop" 
+                                 alt="Fuchsia Organza Zari Suit" 
+                                 class="w-full h-[400px] object-cover">
+                            
+                            <button class="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            
+                            <div class="absolute bottom-4 left-4 bg-black text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+                                New Season
+                            </div>
+                            
+                            <button class="absolute bottom-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">Fuchsia Organza Zari Suit Set With Zardosi</h3>
+                            <p class="text-lg font-semibold text-gray-900">₹9,998</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="scrollProducts('right')" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white rounded-full p-3 shadow-lg hover:bg-gray-100 transition-all">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Right Product Section - Mobile -->
+            <div class="lg:hidden w-full">
+                <div id="mobileProductContainer" class="flex gap-4 overflow-x-auto scroll-smooth scroll-container pb-4">
+                    <!-- Product 1 Mobile -->
+                    <div class="min-w-[260px] flex-shrink-0 product-card">
+                        <div class="relative bg-gray-200 rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500&h=700&fit=crop" 
+                                 alt="Orange Tissue Embroidered Suit" 
+                                 class="w-full h-[380px] object-cover">
+                            
+                            <button class="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            
+                            <div class="absolute bottom-4 left-4 bg-black text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+                                New Season
+                            </div>
+                            
+                            <button class="absolute bottom-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">Orange Tissue Embroidered Suit Set With Sequins</h3>
+                            <p class="text-lg font-semibold text-gray-900">₹9,998</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 Mobile -->
+                    <div class="min-w-[260px] flex-shrink-0 product-card">
+                        <div class="relative bg-gray-200 rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=500&h=700&fit=crop" 
+                                 alt="Wine Chinon Embroidered Suit" 
+                                 class="w-full h-[380px] object-cover">
+                            
+                            <button class="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            
+                            <div class="absolute bottom-4 left-4 bg-black text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+                                New Season
+                            </div>
+                            
+                            <button class="absolute bottom-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">Wine Chinon Embroidered Suit Set With Zari</h3>
+                            <p class="text-lg font-semibold text-gray-900">₹7,998</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 Mobile -->
+                    <div class="min-w-[260px] flex-shrink-0 product-card">
+                        <div class="relative bg-gray-200 rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=500&h=700&fit=crop" 
+                                 alt="Black Dola Silk Woven Design Suit" 
+                                 class="w-full h-[380px] object-cover">
+                            
+                            <button class="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            
+                            <div class="absolute bottom-4 left-4 bg-black text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+                                New Season
+                            </div>
+                            
+                            <button class="absolute bottom-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">Black Dola Silk Woven Design Suit Set With Mirror Work</h3>
+                            <p class="text-lg font-semibold text-gray-900">₹8,998</p>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 Mobile -->
+                    <div class="min-w-[260px] flex-shrink-0 product-card">
+                        <div class="relative bg-gray-200 rounded-lg overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1617019114583-affb34d1b3cd?w=500&h=700&fit=crop" 
+                                 alt="Fuchsia Organza Zari Suit" 
+                                 class="w-full h-[380px] object-cover">
+                            
+                            <button class="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                            
+                            <div class="absolute bottom-4 left-4 bg-black text-white text-xs font-semibold px-3 py-1.5 uppercase tracking-wider">
+                                New Season
+                            </div>
+                            
+                            <button class="absolute bottom-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <h3 class="text-sm font-medium text-gray-900 mb-2">Fuchsia Organza Zari Suit Set With Zardosi</h3>
+                            <p class="text-lg font-semibold text-gray-900">₹9,998</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function scrollProducts(direction) {
+            const container = document.getElementById('productContainer');
+            const scrollAmount = 300;
+            
+            if (direction === 'left') {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // Auto-play carousel (optional)
+        let autoScrollInterval;
+        
+        function startAutoScroll() {
+            autoScrollInterval = setInterval(() => {
+                const container = document.getElementById('productContainer');
+                if (container) {
+                    const maxScroll = container.scrollWidth - container.clientWidth;
+                    if (container.scrollLeft >= maxScroll) {
+                        container.scrollTo({ left: 0, behavior: 'smooth' });
+                    } else {
+                        container.scrollBy({ left: 300, behavior: 'smooth' });
+                    }
+                }
+            }, 5000);
+        }
+
+        // Uncomment below to enable auto-scroll
+        // startAutoScroll();
+    </script>
+</body>
+</html>
