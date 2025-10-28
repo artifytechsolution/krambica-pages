@@ -2,323 +2,466 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Explore Collection</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Recommendations Slider</title>
     <style>
-        /* Clean, minimal arch border */
-        .arch-border {
-            border-radius: 50% 50% 3% 3%;
-            position: relative;
-            background: #fff;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        .arch-border::before {
-            content: '';
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            right: 12px;
-            bottom: 12px;
-            border: 2px solid #c9a961;
-            border-radius: 50% 50% 3% 3%;
-            background: repeating-linear-gradient(
-                0deg,
-                #c9a961,
-                #c9a961 2px,
-                transparent 2px,
-                transparent 10px
-            );
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            padding: 3px;
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f5f5f5;
+            padding: 20px 0;
         }
-        
-        .arch-border::after {
-            content: '';
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            right: 8px;
-            bottom: 8px;
-            border: 3px solid #d4af77;
-            border-radius: 50% 50% 3% 3%;
-            box-shadow: inset 0 0 20px rgba(201, 169, 97, 0.1);
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: white;
         }
-        
-        /* Title underline */
-        .title-underline::after {
-            content: '';
-            position: absolute;
-            bottom: -16px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #c9a961, transparent);
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 50px;
+            color: #333;
         }
-        
-        /* Button effect */
-        .shop-btn {
+
+        .slider-wrapper {
             position: relative;
             overflow: hidden;
+            padding: 0 50px;
         }
-        
-        .shop-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: #fff;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s ease, height 0.5s ease;
+
+        #sliderContainer {
+            display: flex;
+            transition: transform 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
         }
-        
-        .shop-btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .shop-btn span {
+
+        .product-card {
+            flex: 0 0 100%;
+            padding: 0 10px;
             position: relative;
-            z-index: 1;
         }
-        
-        /* NO SCROLLBARS - Clean slider */
-        * {
-            -webkit-overflow-scrolling: touch;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 133.33%;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            margin-bottom: 15px;
         }
-        
-        *::-webkit-scrollbar {
-            display: none !important;
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+            opacity: 0;
+            animation: fadeIn 450ms ease-in forwards;
         }
-        
-        /* Smooth transitions */
-        .slider-container {
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        /* Mobile app-like styling */
-        @media (max-width: 640px) {
-            body {
-                -webkit-tap-highlight-color: transparent;
-            }
-            
-            .arch-border::before {
-                top: 10px;
-                left: 10px;
-                right: 10px;
-                bottom: 10px;
-            }
-            
-            .arch-border::after {
-                top: 6px;
-                left: 6px;
-                right: 6px;
-                bottom: 6px;
-                border-width: 2px;
-            }
-        }
-        
-        /* Fade in animation */
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
             }
         }
-        
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
         }
-        
-        /* Active dot animation */
-        .dot-active {
-            animation: dotPulse 1s infinite;
+
+        .quick-view-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 300ms cubic-bezier(0.4, 0.0, 0.2, 1), 
+                        transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
         }
-        
-        @keyframes dotPulse {
-            0%, 100% {
+
+        .product-card:hover .quick-view-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quick-view-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: #333;
+        }
+
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 15px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .favorite-btn:active {
+            transform: scale(0.9);
+        }
+
+        .favorite-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: #999;
+            fill: none;
+            transition: fill 250ms cubic-bezier(0.4, 0.0, 0.2, 1), 
+                        stroke 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .favorite-btn.active svg {
+            fill: #e74c3c;
+            stroke: #e74c3c;
+            animation: heartBeat 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        @keyframes heartBeat {
+            0% {
                 transform: scale(1);
-                opacity: 1;
+            }
+            30% {
+                transform: scale(1.3);
             }
             50% {
                 transform: scale(1.1);
-                opacity: 0.8;
+            }
+            70% {
+                transform: scale(1.25);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Navigation Arrows */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10;
+            transition: box-shadow 300ms cubic-bezier(0.4, 0.0, 0.2, 1), 
+                        transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform, box-shadow;
+        }
+
+        .slider-arrow:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .slider-arrow:active {
+            transform: translateY(-50%) scale(0.95);
+            transition-duration: 100ms;
+        }
+
+        .slider-arrow.prev {
+            left: 0;
+        }
+
+        .slider-arrow.next {
+            right: 0;
+        }
+
+        .slider-arrow svg {
+            width: 24px;
+            height: 24px;
+            stroke: #333;
+        }
+
+        /* Dots Container */
+        #dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 30px;
+        }
+
+        .dot-active {
+            background-color: #c9a961 !important;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .product-card {
+                flex: 0 0 50%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .product-card {
+                flex: 0 0 33.333%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            .section-title {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+            .slider-wrapper {
+                padding: 0 40px;
+            }
+
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+            }
+
+            .slider-arrow svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider-wrapper {
+                padding: 0 30px;
+            }
+
+            .slider-arrow {
+                width: 36px;
+                height: 36px;
+            }
+
+            .quick-view-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .product-name {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 14px;
             }
         }
     </style>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'playfair': ['Playfair Display', 'serif'],
-                        'inter': ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
 </head>
+<body>
+    <div class="container">
+        <h2 class="section-title">RECOMMENDED FOR YOU</h2>
+        
+        <div class="slider-wrapper">
+            <button class="slider-arrow prev" onclick="prevSlide()" aria-label="Previous">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
 
-<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen font-inter select-none overflow-x-hidden">
-    
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        
-        <!-- Header -->
-        <header class="text-center mb-10 sm:mb-16 fade-in">
-            <h1 class="font-playfair text-3xl sm:text-5xl md:text-6xl font-bold tracking-[0.25em] sm:tracking-[0.35em] text-gray-800 relative inline-block pb-8 title-underline">
-                EXPLORE COLLECTION
-            </h1>
-        </header>
-        
-        <!-- Simple Slider -->
-        <div class="relative">
-            
-            <!-- Slider Container -->
-            <div class="overflow-hidden">
-                <div id="sliderContainer" class="slider-container flex">
-                    
-                    <!-- Card 1 -->
-                    <div class="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-3 sm:px-4">
-                        <div class="group cursor-pointer">
-                            <div class="relative w-full pt-[140%]">
-                                <div class="arch-border absolute top-0 left-0 w-full h-full transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-4 group-hover:shadow-2xl">
-                                    <div class="absolute top-[20px] left-[20px] right-[20px] bottom-[20px] rounded-[50%_50%_3%_3%] overflow-hidden bg-black">
-                                        <img src="card_1.png" alt="Artful Embroidery" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                        
-                                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent pt-20 pb-10 px-6 text-center">
-                                            <h2 class="text-white font-playfair text-2xl sm:text-3xl font-semibold tracking-[0.15em] mb-5 uppercase leading-tight">
-                                                ARTFUL<br>EMBROIDERY
-                                            </h2>
-                                            <button class="shop-btn text-white text-xs sm:text-sm tracking-[0.25em] uppercase border-2 border-white py-3 px-8 bg-transparent transition-all duration-300 hover:bg-white hover:text-gray-900 active:scale-95">
-                                                <span>SHOP NOW</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div id="sliderContainer">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop" alt="Old Rose Solid Straight Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(1)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
                     </div>
-                    
-                    <!-- Card 2 -->
-                    <div class="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-3 sm:px-4">
-                        <div class="group cursor-pointer">
-                            <div class="relative w-full pt-[140%]">
-                                <div class="arch-border absolute top-0 left-0 w-full h-full transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-4 group-hover:shadow-2xl">
-                                    <div class="absolute top-[20px] left-[20px] right-[20px] bottom-[20px] rounded-[50%_50%_3%_3%] overflow-hidden bg-black">
-                                        <img src="card_2.png" alt="Flowy Lehenga" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                        
-                                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent pt-20 pb-10 px-6 text-center">
-                                            <h2 class="text-white font-playfair text-2xl sm:text-3xl font-semibold tracking-[0.15em] mb-5 uppercase leading-tight">
-                                                FLOWY<br>LEHENGA
-                                            </h2>
-                                            <button class="shop-btn text-white text-xs sm:text-sm tracking-[0.25em] uppercase border-2 border-white py-3 px-8 bg-transparent transition-all duration-300 hover:bg-white hover:text-gray-900 active:scale-95">
-                                                <span>SHOP NOW</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Old Rose Solid Straight Suit Set</h3>
+                            <p class="product-price">MRP ₹7,995</p>
                         </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
                     </div>
-                    
-                    <!-- Card 3 -->
-                    <div class="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-3 sm:px-4">
-                        <div class="group cursor-pointer">
-                            <div class="relative w-full pt-[140%]">
-                                <div class="arch-border absolute top-0 left-0 w-full h-full transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-4 group-hover:shadow-2xl">
-                                    <div class="absolute top-[20px] left-[20px] right-[20px] bottom-[20px] rounded-[50%_50%_3%_3%] overflow-hidden bg-black">
-                                        <img src="card_3.png" alt="Posh Palette" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                        
-                                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent pt-20 pb-10 px-6 text-center">
-                                            <h2 class="text-white font-playfair text-2xl sm:text-3xl font-semibold tracking-[0.15em] mb-5 uppercase leading-tight">
-                                                POSH<br>PALETTE
-                                            </h2>
-                                            <button class="shop-btn text-white text-xs sm:text-sm tracking-[0.25em] uppercase border-2 border-white py-3 px-8 bg-transparent transition-all duration-300 hover:bg-white hover:text-gray-900 active:scale-95">
-                                                <span>SHOP NOW</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=500&fit=crop" alt="Lilac Cotton Printed Anarkali Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(2)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
                     </div>
-                    
-                    <!-- Card 4 -->
-                    <div class="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-3 sm:px-4">
-                        <div class="group cursor-pointer">
-                            <div class="relative w-full pt-[140%]">
-                                <div class="arch-border absolute top-0 left-0 w-full h-full transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-4 group-hover:shadow-2xl">
-                                    <div class="absolute top-[20px] left-[20px] right-[20px] bottom-[20px] rounded-[50%_50%_3%_3%] overflow-hidden bg-black">
-                                        <img src="card_4.png" alt="Indigo Chronicles" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                        
-                                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent pt-20 pb-10 px-6 text-center">
-                                            <h2 class="text-white font-playfair text-2xl sm:text-3xl font-semibold tracking-[0.15em] mb-5 uppercase leading-tight">
-                                                INDIGO<br>CHRONICLES
-                                            </h2>
-                                            <button class="shop-btn text-white text-xs sm:text-sm tracking-[0.25em] uppercase border-2 border-white py-3 px-8 bg-transparent transition-all duration-300 hover:bg-white hover:text-gray-900 active:scale-95">
-                                                <span>SHOP NOW</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Lilac Cotton Printed Anarkali Suit Set</h3>
+                            <p class="product-price">MRP ₹4,995</p>
                         </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
                     </div>
-                    
-                    <!-- Card 5 -->
-                    <div class="flex-shrink-0 w-full sm:w-1/2 lg:w-1/3 px-3 sm:px-4">
-                        <div class="group cursor-pointer">
-                            <div class="relative w-full pt-[140%]">
-                                <div class="arch-border absolute top-0 left-0 w-full h-full transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-4 group-hover:shadow-2xl">
-                                    <div class="absolute top-[20px] left-[20px] right-[20px] bottom-[20px] rounded-[50%_50%_3%_3%] overflow-hidden bg-black">
-                                        <img src="card_5.png" alt="Regal Sarees" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                        
-                                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent pt-20 pb-10 px-6 text-center">
-                                            <h2 class="text-white font-playfair text-2xl sm:text-3xl font-semibold tracking-[0.15em] mb-5 uppercase leading-tight">
-                                                REGAL<br>SAREES
-                                            </h2>
-                                            <button class="shop-btn text-white text-xs sm:text-sm tracking-[0.25em] uppercase border-2 border-white py-3 px-8 bg-transparent transition-all duration-300 hover:bg-white hover:text-gray-900 active:scale-95">
-                                                <span>SHOP NOW</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=400&h=500&fit=crop" alt="Rust Embroidered Angrakha Festive Anarkali Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(3)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Rust Embroidered Angrakha Festive Anarkali Suit Set</h3>
+                            <p class="product-price">MRP ₹6,500</p>
                         </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=400&h=500&fit=crop" alt="Purple Viscose Straight Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(4)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Purple Viscose Straight Suit Set</h3>
+                            <p class="product-price">MRP ₹9,995</p>
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1610030469595-f1c0e4ec7e67?w=400&h=500&fit=crop" alt="Red Cotton Foil Printed Anarkali Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(5)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Red Cotton Foil Printed Anarkali Suit Set</h3>
+                            <p class="product-price">MRP ₹7,500</p>
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
-            
+
+            <button class="slider-arrow next" onclick="nextSlide()" aria-label="Next">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
         </div>
-        
-        <!-- Navigation Dots -->
-        <div id="dots" class="flex justify-center gap-3 mt-10 sm:mt-12">
-            <!-- Dots will be generated by JavaScript -->
-        </div>
+
+        <div id="dots"></div>
     </div>
 
     <script>
         // Configuration
-        const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds
+        const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds - Autoplay ENABLED
         const CARDS_PER_VIEW = {
             mobile: 1,
             tablet: 2,
@@ -484,14 +627,44 @@
         updateSlider();
         startAutoSlide();
         
-        // Button click handlers
-        document.querySelectorAll('.shop-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const title = e.target.closest('.group').querySelector('h2').textContent.trim().replace(/\s+/g, ' ');
-                alert(`Opening ${title} collection...`);
+        // Toggle favorite function
+        function toggleFavorite(button) {
+            button.classList.toggle('active');
+        }
+        
+        // Quick view function
+        function quickView(productId) {
+            console.log(`Opening quick view for product ${productId}`);
+            alert(`Quick view for product ${productId}`);
+        }
+        
+        // Pause autoplay on slider interaction (arrow buttons)
+        const prevArrow = document.querySelector('.slider-arrow.prev');
+        const nextArrow = document.querySelector('.slider-arrow.next');
+        const sliderWrapper = document.querySelector('.slider-wrapper');
+        
+        if (prevArrow) {
+            prevArrow.addEventListener('click', () => {
+                resetAutoSlide();
             });
-        });
+        }
+        
+        if (nextArrow) {
+            nextArrow.addEventListener('click', () => {
+                resetAutoSlide();
+            });
+        }
+        
+        // Pause autoplay on hover for better UX
+        if (sliderWrapper) {
+            sliderWrapper.addEventListener('mouseenter', () => {
+                stopAutoSlide();
+            });
+            
+            sliderWrapper.addEventListener('mouseleave', () => {
+                startAutoSlide();
+            });
+        }
     </script>
 </body>
 </html>

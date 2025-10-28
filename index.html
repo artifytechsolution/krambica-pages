@@ -650,6 +650,604 @@
             }
         }
     </style>
+         <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f5f5f5;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 0 50px;
+        }
+
+        #sliderContainer {
+            display: flex;
+            transition: transform 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .product-card {
+            flex: 0 0 100%;
+            padding: 0 10px;
+            position: relative;
+        }
+
+        .product-image-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 133.33%;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .product-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+            opacity: 0;
+            animation: fadeIn 450ms ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .quick-view-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 300ms cubic-bezier(0.4, 0.0, 0.2, 1), 
+                        transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .product-card:hover .quick-view-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quick-view-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: #333;
+        }
+
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .product-details {
+            flex: 1;
+        }
+
+        .product-name {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-price {
+            font-size: 15px;
+            font-weight: 600;
+            color: #000;
+        }
+
+        .favorite-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            transition: transform 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .favorite-btn:active {
+            transform: scale(0.9);
+        }
+
+        .favorite-btn svg {
+            width: 24px;
+            height: 24px;
+            stroke: #999;
+            fill: none;
+            transition: fill 250ms cubic-bezier(0.4, 0.0, 0.2, 1), 
+                        stroke 250ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        .favorite-btn.active svg {
+            fill: #e74c3c;
+            stroke: #e74c3c;
+            animation: heartBeat 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+
+        @keyframes heartBeat {
+            0% {
+                transform: scale(1);
+            }
+            30% {
+                transform: scale(1.3);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            70% {
+                transform: scale(1.25);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Navigation Arrows */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10;
+            transition: box-shadow 300ms cubic-bezier(0.4, 0.0, 0.2, 1), 
+                        transform 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform, box-shadow;
+        }
+
+        .slider-arrow:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .slider-arrow:active {
+            transform: translateY(-50%) scale(0.95);
+            transition-duration: 100ms;
+        }
+
+        .slider-arrow.prev {
+            left: 0;
+        }
+
+        .slider-arrow.next {
+            right: 0;
+        }
+
+        .slider-arrow svg {
+            width: 24px;
+            height: 24px;
+            stroke: #333;
+        }
+
+        /* Dots Container */
+        #dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 30px;
+        }
+
+        .dot-active {
+            background-color: #c9a961 !important;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .product-card {
+                flex: 0 0 50%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .product-card {
+                flex: 0 0 33.333%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+
+            .section-title {
+                font-size: 24px;
+                margin-bottom: 30px;
+            }
+
+            .slider-wrapper {
+                padding: 0 40px;
+            }
+
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+            }
+
+            .slider-arrow svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slider-wrapper {
+                padding: 0 30px;
+            }
+
+            .slider-arrow {
+                width: 36px;
+                height: 36px;
+            }
+
+            .quick-view-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .product-name {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 14px;
+            }
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            color: #2E6A64;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: #6b7280;
+            margin-bottom: 50px;
+        }
+
+        /* Testimonials Slider */
+        .testimonials-slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 0 50px;
+        }
+
+        #testimonialsSliderContainer {
+            display: flex;
+            transition: transform 600ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .testimonial-card {
+            flex: 0 0 100%;
+            padding: 0 15px;
+        }
+
+        .testimonial-content {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 1px solid #f3f4f6;
+            position: relative;
+            transition: all 400ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-content:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        .quote-icon {
+            font-size: 70px;
+            color: #2E6A64;
+            opacity: 0.15;
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            line-height: 1;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .customer-image {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #2E6A64;
+            box-shadow: 0 4px 12px rgba(46, 106, 100, 0.2);
+        }
+
+        .customer-info {
+            margin-left: 15px;
+            flex: 1;
+        }
+
+        .customer-name {
+            font-weight: 600;
+            font-size: 18px;
+            color: #1f2937;
+            margin-bottom: 4px;
+        }
+
+        .customer-location {
+            font-size: 14px;
+            color: #6b7280;
+        }
+
+        .star-rating {
+            color: #fbbf24;
+            font-size: 18px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #4b5563;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            flex-grow: 1;
+        }
+
+        .purchase-info {
+            font-size: 13px;
+            color: #9ca3af;
+            border-top: 1px solid #f3f4f6;
+            padding-top: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Slider Arrows */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid #2E6A64;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 10;
+            transition: all 300ms cubic-bezier(0.4, 0.0, 0.2, 1);
+            will-change: transform, background-color;
+        }
+
+        .slider-arrow:hover {
+            background-color: #2E6A64;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 16px rgba(46, 106, 100, 0.3);
+        }
+
+        .slider-arrow:hover svg {
+            stroke: white;
+        }
+
+        .slider-arrow:active {
+            transform: translateY(-50%) scale(0.95);
+            transition-duration: 100ms;
+        }
+
+        .slider-arrow.prev {
+            left: 0;
+        }
+
+        .slider-arrow.next {
+            right: 0;
+        }
+
+        .slider-arrow svg {
+            width: 24px;
+            height: 24px;
+            stroke: #2E6A64;
+            transition: stroke 300ms;
+        }
+
+        /* Dots */
+        #testimonialDots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .testimonial-dot-active {
+            background-color: #2E6A64 !important;
+            width: 32px !important;
+            border-radius: 10px !important;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 640px) {
+            .testimonial-card {
+                flex: 0 0 50%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .testimonial-card {
+                flex: 0 0 33.333%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+
+            .section-subtitle {
+                font-size: 16px;
+                margin-bottom: 35px;
+            }
+
+            .testimonials-slider-wrapper {
+                padding: 0 40px;
+            }
+
+            .testimonial-content {
+                padding: 25px;
+            }
+
+            .quote-icon {
+                font-size: 50px;
+                top: 10px;
+                left: 15px;
+            }
+
+            .customer-image {
+                width: 55px;
+                height: 55px;
+            }
+
+            .customer-name {
+                font-size: 16px;
+            }
+
+            .testimonial-text {
+                font-size: 15px;
+            }
+
+            .slider-arrow {
+                width: 42px;
+                height: 42px;
+            }
+
+            .slider-arrow svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .testimonials-slider-wrapper {
+                padding: 0 35px;
+            }
+
+            .slider-arrow {
+                width: 38px;
+                height: 38px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .section-subtitle {
+                font-size: 14px;
+            }
+
+            .testimonial-content {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body class="font-sans bg-gradient-to-br from-slate-50 to-teal-50 min-h-screen">
     <!-- Search Overlay -->
@@ -1142,10 +1740,7 @@
 
        <section class="py-12 md:py-16" id="collections">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 md:mb-12">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-primary font-serif">Shop by Category</h2>
-                <p class="text-gray-600 text-base md:text-lg">Explore our curated collections</p>
-            </div>
+             <h2 class="section-title">Shop By Category</h2>
 
               <!-- Simple Slider -->
       <div class="relative">
@@ -1182,8 +1777,8 @@
                     <div class="relative w-full pt-[140%]">
                         <div class="arch-border absolute top-0 left-0 w-full h-full transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-4 group-hover:shadow-2xl">
                             <div class="absolute top-[20px] left-[20px] right-[20px] bottom-[20px] rounded-[50%_50%_3%_3%] overflow-hidden bg-black">
-                                <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800&h=1000&fit=crop&q=80" alt="Flowy Lehenga" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                
+                                 <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&h=1000&fit=crop&q=80" alt="Posh Palette" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                              
                                 <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent pt-20 pb-10 px-6 text-center">
                                     <h2 class="text-white font-playfair text-2xl sm:text-3xl font-semibold tracking-[0.15em] mb-5 uppercase leading-tight">
                                         FLOWY<br>LEHENGA
@@ -1277,37 +1872,150 @@
     </section>
 
     <!-- Trending Now Section -->
-    <section class="py-12 md:py-16 bg-gradient-to-br from-purple-50 to-pink-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 md:mb-12">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-primary font-serif">Trending Now</h2>
-                <p class="text-gray-600 text-base md:text-lg">What everyone's talking about</p>
+     <div class="container">
+        <h2 class="section-title">RECOMMENDED FOR YOU</h2>
+        
+        <div class="slider-wrapper">
+            <button class="slider-arrow prev" onclick="prevSlide()" aria-label="Previous">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+
+            <div id="sliderContainer">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop" alt="Old Rose Solid Straight Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(1)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Old Rose Solid Straight Suit Set</h3>
+                            <p class="product-price">MRP ₹7,995</p>
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=500&fit=crop" alt="Lilac Cotton Printed Anarkali Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(2)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Lilac Cotton Printed Anarkali Suit Set</h3>
+                            <p class="product-price">MRP ₹4,995</p>
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=400&h=500&fit=crop" alt="Rust Embroidered Angrakha Festive Anarkali Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(3)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Rust Embroidered Angrakha Festive Anarkali Suit Set</h3>
+                            <p class="product-price">MRP ₹6,500</p>
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=400&h=500&fit=crop" alt="Purple Viscose Straight Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(4)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Purple Viscose Straight Suit Set</h3>
+                            <p class="product-price">MRP ₹9,995</p>
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img src="https://images.unsplash.com/photo-1610030469595-f1c0e4ec7e67?w=400&h=500&fit=crop" alt="Red Cotton Foil Printed Anarkali Suit Set" class="product-image">
+                        <button class="quick-view-btn" onclick="quickView(5)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-details">
+                            <h3 class="product-name">Red Cotton Foil Printed Anarkali Suit Set</h3>
+                            <p class="product-price">MRP ₹7,500</p>
+                        </div>
+                        <button class="favorite-btn" onclick="toggleFavorite(this)">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="trending-container">
-              
-            </div>
+            <button class="slider-arrow next" onclick="nextSlide()" aria-label="Next">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
         </div>
-    </section>
+
+        <div id="dots"></div>
+    </div>
 
     <!-- Shop by Category -->
-   
-    <!-- Best Sellers -->
-    <section class="py-12 md:py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 md:mb-12">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-primary font-serif">Best Sellers</h2>
-                <p class="text-gray-600 text-base md:text-lg">Our most loved products</p>
-            </div>
-
-            <div class="swiper bestsellers-swiper">
-                <div class="swiper-wrapper" id="bestsellers-container">
-                    <!-- Best seller products will be inserted here -->
-                </div>
-                <div class="swiper-pagination !relative !mt-8"></div>
-            </div>
-        </div>
-    </section>
+ 
 
     <!-- Brand Story Video Section -->
     <section class="py-12 md:py-16">
@@ -1411,66 +2119,180 @@
 
 
     <!-- Customer Reviews -->
-    <section class="py-12 md:py-16 bg-white">
+  <section class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-10 md:mb-12">
-                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-primary font-serif">What Our Customers Say</h2>
-                <p class="text-gray-600 text-base md:text-lg">Real reviews from real customers</p>
-            </div>
+            <h2 class="section-title">What Our Customers Say</h2>
+            <p class="section-subtitle">Real reviews from real customers</p>
+            
+            <div class="testimonials-slider-wrapper">
+                <button class="slider-arrow prev" onclick="prevTestimonialSlide()" aria-label="Previous testimonial">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
 
-            <div class="swiper testimonials-swiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100">
-                            <div class="flex items-center mb-6">
-                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Sarah" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover">
-                                <div class="ml-4">
-                                    <h4 class="font-bold text-base md:text-lg">Sarah Johnson</h4>
-                                    <div class="flex text-yellow-500 text-sm">★★★★★</div>
+                <div id="testimonialsSliderContainer">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-header">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Sarah Johnson" class="customer-image">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">Sarah Johnson</h4>
+                                    <p class="customer-location">New York, USA</p>
                                 </div>
                             </div>
-                            <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-4">
-                                "Absolutely love my purchase! The quality is outstanding and the fit is perfect.
-                                Krambica has become my go-to store for all my fashion needs."
+                            <div class="star-rating">★★★★★</div>
+                            <p class="testimonial-text">
+                                "Absolutely love my purchase! The quality is outstanding and the fit is perfect. Krambica has become my go-to store for all my fashion needs. Every piece I've ordered has exceeded my expectations!"
                             </p>
-                            <span class="text-gray-500 text-xs md:text-sm">Purchased: Floral Summer Dress</span>
+                            <span class="purchase-info">Purchased: Floral Summer Dress</span>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100">
-                            <div class="flex items-center mb-6">
-                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="Emily" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover">
-                                <div class="ml-4">
-                                    <h4 class="font-bold text-base md:text-lg">Emily Davis</h4>
-                                    <div class="flex text-yellow-500 text-sm">★★★★★</div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-header">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="Emily Davis" class="customer-image">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">Emily Davis</h4>
+                                    <p class="customer-location">Los Angeles, USA</p>
                                 </div>
                             </div>
-                            <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-4">
-                                "The customer service is exceptional! Fast shipping and beautiful packaging.
-                                The clothes are even better in person than in photos."
+                            <div class="star-rating">★★★★★</div>
+                            <p class="testimonial-text">
+                                "The customer service is exceptional! Fast shipping and beautiful packaging. The clothes are even better in person than in photos. I'm so impressed with the attention to detail!"
                             </p>
-                            <span class="text-gray-500 text-xs md:text-sm">Purchased: Designer Handbag</span>
+                            <span class="purchase-info">Purchased: Designer Handbag</span>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100">
-                            <div class="flex items-center mb-6">
-                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="Jessica" class="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover">
-                                <div class="ml-4">
-                                    <h4 class="font-bold text-base md:text-lg">Jessica Martinez</h4>
-                                    <div class="flex text-yellow-500 text-sm">★★★★★</div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-header">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="Jessica Martinez" class="customer-image">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">Jessica Martinez</h4>
+                                    <p class="customer-location">Miami, USA</p>
                                 </div>
                             </div>
-                            <p class="text-gray-700 text-base md:text-lg leading-relaxed mb-4">
-                                "Premium quality at reasonable prices. I've recommended Krambica to all my friends.
-                                The attention to detail is remarkable!"
+                            <div class="star-rating">★★★★★</div>
+                            <p class="testimonial-text">
+                                "Premium quality at reasonable prices. I've recommended Krambica to all my friends. The attention to detail is remarkable and the fabrics feel luxurious. Worth every penny!"
                             </p>
-                            <span class="text-gray-500 text-xs md:text-sm">Purchased: Silk Blouse</span>
+                            <span class="purchase-info">Purchased: Silk Blouse</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-header">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" alt="Amanda White" class="customer-image">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">Amanda White</h4>
+                                    <p class="customer-location">Chicago, USA</p>
+                                </div>
+                            </div>
+                            <div class="star-rating">★★★★★</div>
+                            <p class="testimonial-text">
+                                "I'm obsessed with everything I've bought! The styles are trendy yet timeless, and the quality is unmatched. Fast delivery and excellent customer support. Highly recommend!"
+                            </p>
+                            <span class="purchase-info">Purchased: Evening Gown</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 5 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-header">
+                                <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=100&h=100&fit=crop" alt="Rachel Green" class="customer-image">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">Rachel Green</h4>
+                                    <p class="customer-location">Boston, USA</p>
+                                </div>
+                            </div>
+                            <div class="star-rating">★★★★★</div>
+                            <p class="testimonial-text">
+                                "Best online shopping experience ever! The website is easy to navigate, checkout is smooth, and my order arrived perfectly packaged. The dress fits like a dream. Will definitely shop again!"
+                            </p>
+                            <span class="purchase-info">Purchased: Maxi Dress Collection</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 6 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-header">
+                                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop" alt="Lauren Taylor" class="customer-image">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">Lauren Taylor</h4>
+                                    <p class="customer-location">Seattle, USA</p>
+                                </div>
+                            </div>
+                            <div class="star-rating">★★★★★</div>
+                            <p class="testimonial-text">
+                                "The fabrics are luxurious and the designs are sophisticated. I feel confident and beautiful wearing Krambica. Their attention to customer satisfaction is truly impressive!"
+                            </p>
+                            <span class="purchase-info">Purchased: Formal Blazer Set</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 7 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-header">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Michael Brown" class="customer-image">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">Michael Brown</h4>
+                                    <p class="customer-location">Austin, USA</p>
+                                </div>
+                            </div>
+                            <div class="star-rating">★★★★★</div>
+                            <p class="testimonial-text">
+                                "Bought gifts for my wife and she absolutely loves everything! The quality exceeded our expectations. Great selection and the sizing is accurate. Five stars all the way!"
+                            </p>
+                            <span class="purchase-info">Purchased: Gift Set Collection</span>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 8 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="quote-icon">"</div>
+                            <div class="testimonial-header">
+                                <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop" alt="Olivia Anderson" class="customer-image">
+                                <div class="customer-info">
+                                    <h4 class="customer-name">Olivia Anderson</h4>
+                                    <p class="customer-location">San Francisco, USA</p>
+                                </div>
+                            </div>
+                            <div class="star-rating">★★★★★</div>
+                            <p class="testimonial-text">
+                                "Simply amazing! The collection is curated beautifully and every piece tells a story. The quality-to-price ratio is unbeatable. Krambica is my fashion destination now!"
+                            </p>
+                            <span class="purchase-info">Purchased: Casual Chic Bundle</span>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-pagination !relative !mt-8"></div>
+
+                <button class="slider-arrow next" onclick="nextTestimonialSlide()" aria-label="Next testimonial">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
             </div>
+
+            <div id="testimonialDots"></div>
         </div>
     </section>
 
@@ -1582,7 +2404,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-16 pb-8">
+    <footer class="bg-gradient-to-br from-gray-900 hidden md:block via-gray-800 to-gray-900 text-white pt-16 pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Main Footer Content -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
@@ -1836,525 +2658,7 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        // Modal Functions
-        function openChatModal() {
-            const modal = document.getElementById('chatModal');
-            const content = document.getElementById('chatModalContent');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
 
-        function closeChatModal() {
-            const modal = document.getElementById('chatModal');
-            const content = document.getElementById('chatModalContent');
-            content.classList.add('scale-95', 'opacity-0');
-            content.classList.remove('scale-100', 'opacity-100');
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        }
-
-        function openWhatsAppModal() {
-            const modal = document.getElementById('whatsappModal');
-            const content = document.getElementById('whatsappModalContent');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                content.classList.remove('scale-95', 'opacity-0');
-                content.classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function closeWhatsAppModal() {
-            const modal = document.getElementById('whatsappModal');
-            const content = document.getElementById('whatsappModalContent');
-            content.classList.add('scale-95', 'opacity-0');
-            content.classList.remove('scale-100', 'opacity-100');
-            setTimeout(() => modal.classList.add('hidden'), 300);
-        }
-
-        // Close modals on background click
-        document.getElementById('chatModal').addEventListener('click', function(e) {
-            if (e.target === this) closeChatModal();
-        });
-        document.getElementById('whatsappModal').addEventListener('click', function(e) {
-            if (e.target === this) closeWhatsAppModal();
-        });
-
-        // Product Data
-        const allProducts = [
-            { id: 1, name: "Floral Summer Dress", category: "dresses", price: 7469, image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/7670218/7670218-uhd_2732_1440_25fps.mp4", description: "Beautiful floral print dress perfect for summer occasions", discount: 30 },
-            { id: 2, name: "Elegant Evening Gown", category: "dresses", price: 12449, image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/8939122/8939122-uhd_2732_1440_25fps.mp4", description: "Sophisticated evening gown for special events", discount: 25 },
-            { id: 3, name: "Casual Maxi Dress", category: "dresses", price: 6639, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/7670215/7670215-uhd_2732_1440_25fps.mp4", description: "Comfortable maxi dress for everyday wear", discount: 40 },
-            { id: 4, name: "Bohemian Print Dress", category: "dresses", price: 7884, image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/8127395/8127395-uhd_2732_1440_25fps.mp4", description: "Trendy bohemian style with vibrant prints", discount: 35 },
-            { id: 7, name: "Silk Blouse", category: "tops", price: 4979, image: "https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/7670220/7670220-uhd_2732_1440_25fps.mp4", description: "Luxurious silk blouse for professional look" },
-            { id: 8, name: "Casual T-Shirt", category: "tops", price: 2489, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/8127396/8127396-uhd_2732_1440_25fps.mp4", description: "Comfortable cotton t-shirt for casual days" },
-            { id: 13, name: "High-Waist Jeans", category: "bottoms", price: 6639, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/8939121/8939121-uhd_2732_1440_25fps.mp4", description: "Premium denim with perfect fit" },
-            { id: 19, name: "Designer Handbag", category: "accessories", price: 16599, image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/8939124/8939124-uhd_2732_1440_25fps.mp4", description: "Luxury designer handbag" },
-        ];
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            // Highlight active navigation link
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-
-            // Desktop navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                const linkPage = link.getAttribute('data-page');
-                if (linkPage === currentPage) {
-                    link.classList.remove('text-gray-700');
-                    link.classList.add('text-primary');
-                    const underline = link.querySelector('.nav-underline');
-                    if (underline) {
-                        underline.classList.remove('w-0');
-                        underline.classList.add('w-full');
-                    }
-                }
-            });
-
-            // Mobile navigation
-            document.querySelectorAll('.mobile-nav-link').forEach(link => {
-                const linkPage = link.getAttribute('data-page');
-                if (linkPage === currentPage) {
-                    link.classList.remove('text-gray-700');
-                    link.classList.add('text-primary', 'font-bold');
-                    const dot = link.querySelector('.mobile-nav-dot');
-                    if (dot) {
-                        dot.classList.remove('bg-transparent');
-                        dot.classList.add('bg-primary');
-                    }
-                }
-            });
-
-            // Initialize hero carousel
-            new Swiper('.hero-swiper', {
-                loop: true,
-                autoplay: { delay: 5000, disableOnInteraction: false },
-                effect: 'fade',
-                fadeEffect: { crossFade: true },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
-                },
-            });
-
-            // Initialize testimonials carousel
-            new Swiper('.testimonials-swiper', {
-                slidesPerView: 1,
-                spaceBetween: 32,
-                loop: true,
-                autoplay: { delay: 4000 },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-                breakpoints: {
-                    768: { slidesPerView: 2 },
-                    1024: { slidesPerView: 3 },
-                },
-            });
-
-            // Mobile menu toggle
-            const mobileMenuBtn = document.getElementById('mobile-menu-toggle');
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenuBtn && mobileMenu) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-
-            // Update cart count
-            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            document.getElementById('cart-count').textContent = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-
-            // Render products
-            renderTrending();
-            renderBestSellers();
-        });
-
-        // Render Trending
-        function renderTrending() {
-            const container = document.getElementById('trending-container');
-            const trendingProducts = allProducts.slice(0, 3);
-            container.innerHTML = trendingProducts.map(product => {
-                const card = renderProductCard(product);
-                return card.replace('<div class="relative w-full h-80 md:h-96 overflow-hidden bg-slate-100 rounded-t-2xl">', '<div class="relative w-full h-80 md:h-96 overflow-hidden bg-slate-100 rounded-t-2xl"><div class="absolute top-5 left-5 bg-gradient-to-r from-amber-500 to-red-500 text-white px-4 py-2 rounded-full text-xs font-bold z-10 animate-pulse">🔥 TRENDING</div>');
-            }).join('');
-            setupVideoHover();
-        }
-
-        // Render Best Sellers
-        function renderBestSellers() {
-            const container = document.getElementById('bestsellers-container');
-            container.innerHTML = allProducts.map(product => `
-                <div class="swiper-slide">
-                    ${renderProductCard(product)}
-                </div>
-            `).join('');
-            setupVideoHover();
-
-            // Initialize bestsellers carousel AFTER products are rendered
-            setTimeout(() => {
-                new Swiper('.bestsellers-swiper', {
-                    slidesPerView: 1,
-                    spaceBetween: 24,
-                    loop: true,
-                    autoplay: {
-                        delay: 3000,
-                        disableOnInteraction: false,
-                    },
-                    pagination: {
-                        el: '.bestsellers-swiper .swiper-pagination',
-                        clickable: true,
-                    },
-                    breakpoints: {
-                        640: { slidesPerView: 2, spaceBetween: 24 },
-                        1024: { slidesPerView: 3, spaceBetween: 32 },
-                    },
-                });
-            }, 100);
-        }
-
-        // Product Card Template (Using Tailwind CSS only)
-        function renderProductCard(product) {
-            return `
-                <article class="relative bg-white rounded-2xl overflow-hidden transition-all duration-300 border border-gray-200 hover:-translate-y-3 hover:scale-[1.02] hover:shadow-2xl hover:shadow-primary/25 hover:border-primary/40 h-full flex flex-col">
-                    <div class="relative w-full h-80 md:h-96 overflow-hidden bg-slate-100 rounded-t-2xl">
-                        <img src="${product.image}" alt="${product.name}" class="product-image w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-500">
-                        <video class="product-video absolute top-0 left-0 w-full h-full object-cover opacity-0 transition-opacity duration-500" muted loop preload="none">
-                            <source src="${product.video}" type="video/mp4">
-                        </video>
-                        <div class="wishlist-btn absolute top-5 right-5 w-12 h-12 bg-white/95 backdrop-blur-lg rounded-full flex items-center justify-center cursor-pointer z-10 transition-all duration-300 hover:scale-110 hover:-rotate-12 hover:bg-red-50 shadow-lg border-2 border-white/50" onclick="toggleWishlist(event, ${product.id})">
-                            <svg class="w-5 h-5 stroke-red-500 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </div>
-                        ${product.discount ? `<span class="absolute top-5 left-5 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">-${product.discount}%</span>` : ''}
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="flex items-start justify-between mb-3">
-                            <h3 class="font-bold text-lg md:text-xl text-gray-900 leading-tight flex-1">${product.name}</h3>
-                            <div class="flex text-yellow-500 text-sm ml-2">★★★★★</div>
-                        </div>
-                        <p class="text-gray-600 text-sm mb-4 leading-relaxed">${product.description}</p>
-                        <div class="flex items-center justify-between mb-4 mt-auto">
-                            <span class="text-2xl md:text-3xl font-bold text-secondary">₹${product.price.toFixed(2)}</span>
-                            <span class="text-xs uppercase tracking-wider text-gray-500 font-semibold">${product.category}</span>
-                        </div>
-                        <div class="flex gap-3">
-                            <button onclick="quickView(${product.id})" class="flex-1 bg-white border-2 border-secondary text-secondary px-4 md:px-6 py-3 rounded-lg font-semibold hover:bg-secondary hover:text-white transition-all duration-300">
-                                Quick View
-                            </button>
-                            <button onclick="addToCart(${product.id})" class="flex-1 bg-secondary text-white px-4 md:px-6 py-3 rounded-lg font-semibold hover:bg-teal-700 transition-all duration-300">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </article>
-            `;
-        }
-
-        // Video Hover
-        function setupVideoHover() {
-            document.querySelectorAll('article').forEach(card => {
-                const video = card.querySelector('.product-video');
-                const image = card.querySelector('.product-image');
-                if (video && image) {
-                    card.addEventListener('mouseenter', () => {
-                        image.classList.add('opacity-0');
-                        video.classList.remove('opacity-0');
-                        video.classList.add('opacity-100');
-                        video.play().catch(e => console.log('Video play error:', e));
-                    });
-                    card.addEventListener('mouseleave', () => {
-                        image.classList.remove('opacity-0');
-                        video.classList.add('opacity-0');
-                        video.classList.remove('opacity-100');
-                        video.pause();
-                        video.currentTime = 0;
-                    });
-                }
-            });
-        }
-        
-
-        // Wishlist Toggle
-        function toggleWishlist(event, productId) {
-            event.stopPropagation();
-            const btn = event.currentTarget;
-            const svg = btn.querySelector('svg');
-            
-            let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
-            
-            if (wishlist.includes(productId)) {
-                wishlist = wishlist.filter(id => id !== productId);
-                svg.classList.remove('fill-white');
-                btn.classList.remove('!bg-gradient-to-br', 'from-red-500', 'to-red-600', 'scale-110');
-            } else {
-                wishlist.push(productId);
-                svg.classList.add('fill-white');
-                btn.classList.add('!bg-gradient-to-br', 'from-red-500', 'to-red-600', 'scale-110');
-            }
-            
-            localStorage.setItem('wishlist', JSON.stringify(wishlist));
-        }
-
-        // Add to Cart with animation
-        function addToCart(productId) {
-            const product = allProducts.find(p => p.id === productId);
-            if (!product) return;
-
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const existingItem = cart.find(item => item.id === productId);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ id: product.id, name: product.name, price: product.price, image: product.image, quantity: 1 });
-            }
-            localStorage.setItem('cart', JSON.stringify(cart));
-
-            // Update cart count with animation
-            const cartCountEl = document.getElementById('cart-count');
-            const newCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-            cartCountEl.textContent = newCount;
-
-            // Show toast notification
-            showToast(`${product.name} added to cart!`, 'success');
-        }
-
-        // Toast notification function
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `fixed top-24 right-4 z-50 px-6 py-4 rounded-xl shadow-2xl transform transition-all duration-500 flex items-center gap-3 ${
-                type === 'success' ? 'bg-green-500' : 'bg-red-500'
-            } text-white font-semibold`;
-            toast.style.transform = 'translateX(400px)';
-
-            const icon = type === 'success'
-                ? '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>'
-                : '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
-
-            toast.innerHTML = `${icon}<span>${message}</span>`;
-            document.body.appendChild(toast);
-
-            setTimeout(() => {
-                toast.style.transform = 'translateX(0)';
-            }, 10);
-
-            setTimeout(() => {
-                toast.style.transform = 'translateX(400px)';
-                setTimeout(() => toast.remove(), 500);
-            }, 3000);
-        }
-
-        // Quick View
-        function quickView(productId) {
-            const product = allProducts.find(p => p.id === productId);
-            alert(`Quick View: ${product.name}\nPrice: ₹${product.price}\n\n${product.description}`);
-        }
-
-        // Newsletter Submit
-        function handleNewsletterSubmit(event) {
-            event.preventDefault();
-            const email = event.target.querySelector('input[type="email"]').value;
-            showToast(`Thank you for subscribing! Check ${email} for your 15% off coupon code.`, 'success');
-            event.target.reset();
-            return false;
-        }
-
-        // Search Products Array
-        const searchProducts = [
-            { id: 1, name: "Floral Summer Dress", category: "dresses", price: 7469, originalPrice: 9959, image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&h=800&fit=crop", url: "product-details.html" },
-            { id: 2, name: "Elegant Evening Gown", category: "dresses", price: 12449, image: "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=600&h=800&fit=crop", url: "product-details.html" },
-            { id: 3, name: "Casual Maxi Dress", category: "dresses", price: 6639, originalPrice: 8304, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600&h=800&fit=crop", url: "product-details.html" },
-            { id: 4, name: "Bohemian Print Dress", category: "dresses", price: 7884, image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600&h=800&fit=crop", url: "product-details.html" },
-            { id: 7, name: "Silk Blouse", category: "tops", price: 4979, image: "https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?w=600&h=800&fit=crop", url: "product-details.html" },
-            { id: 8, name: "Casual T-Shirt", category: "tops", price: 2489, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=800&fit=crop", url: "product-details.html" },
-            { id: 13, name: "High-Waist Jeans", category: "bottoms", price: 6639, image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&h=800&fit=crop", url: "product-details.html" },
-            { id: 19, name: "Designer Handbag", category: "accessories", price: 16599, image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&h=800&fit=crop", url: "product-details.html" }
-        ];
-
-        let currentSearchCategory = 'all';
-
-        // Open search overlay
-        function openSearch() {
-            const overlay = document.getElementById('searchOverlay');
-            overlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            setTimeout(() => { document.getElementById('searchInput').focus(); }, 100);
-        }
-
-        // Close search overlay
-        function closeSearch(event) {
-            if (event && event.target.closest('.search-popup') && !event.target.closest('button[onclick="closeSearch()"]')) return;
-            const overlay = document.getElementById('searchOverlay');
-            overlay.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            document.getElementById('searchInput').value = '';
-            currentSearchCategory = 'all';
-            document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
-            document.querySelector('.category-chip[data-category="all"]').classList.add('active');
-            displaySearchResults([]);
-        }
-
-        // Filter by category
-        function filterByCategory(category, element) {
-            currentSearchCategory = category;
-            document.querySelectorAll('.category-chip').forEach(chip => chip.classList.remove('active'));
-            element.classList.add('active');
-            handleSearch(document.getElementById('searchInput').value);
-        }
-
-        // Handle search (auto-search)
-        function handleSearch(value) {
-            const searchTerm = value.toLowerCase().trim();
-            let filteredProducts = searchProducts;
-            if (currentSearchCategory !== 'all') {
-                filteredProducts = filteredProducts.filter(p => p.category === currentSearchCategory);
-            }
-            if (searchTerm) {
-                filteredProducts = filteredProducts.filter(p =>
-                    p.name.toLowerCase().includes(searchTerm) || p.category.toLowerCase().includes(searchTerm)
-                );
-            }
-            displaySearchResults(filteredProducts);
-        }
-
-        // Display search results
-        function displaySearchResults(results) {
-            const container = document.getElementById('searchResults');
-            if (results.length === 0) {
-                const searchValue = document.getElementById('searchInput').value;
-                container.innerHTML = searchValue.trim() ?
-                    `<div class="text-center py-12 text-gray-400">
-                        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <p class="text-lg font-semibold mb-2">No products found</p>
-                        <p class="text-sm">Try adjusting your search or category filter</p>
-                    </div>` :
-                    `<div class="text-center py-12 text-gray-400">
-                        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                        <p class="text-lg font-semibold">Start typing to search products</p>
-                    </div>`;
-                return;
-            }
-            container.innerHTML = `
-                <div class="mb-4 px-4 py-2 bg-primary/5 rounded-lg">
-                    <p class="text-sm text-gray-600">
-                        <span class="font-bold text-primary">${results.length}</span>
-                        ${results.length === 1 ? 'product' : 'products'} found
-                    </p>
-                </div>
-                ${results.map(product => `
-                    <div class="search-result-item" onclick="window.location.href='${product.url}'">
-                        <img src="${product.image}" alt="${product.name}" class="search-result-image">
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-gray-900 mb-1">${product.name}</h4>
-                            <div class="flex items-center gap-2 flex-wrap">
-                                <span class="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full font-medium capitalize">${product.category}</span>
-                                <span class="text-lg font-bold text-primary">₹${product.price.toLocaleString('en-IN')}</span>
-                                ${product.originalPrice ? `<span class="text-sm text-gray-400 line-through ml-2">₹${product.originalPrice.toLocaleString('en-IN')}</span>` : ''}
-                                ${product.originalPrice ? `<span class="text-xs text-green-600 font-semibold ml-2">Save ₹${(product.originalPrice - product.price).toLocaleString('en-IN')}</span>` : ''}
-                            </div>
-                        </div>
-                        <svg class="w-5 h-5 text-gray-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </div>
-                `).join('')}
-            `;
-        }
-
-        // Close search on Escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeSearch();
-        });
-
-        // ========================================
-        // MOBILE ENHANCEMENTS (Added for responsive support)
-        // ========================================
-
-        // Set active bottom navigation item based on current page
-        document.addEventListener('DOMContentLoaded', function() {
-            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-            const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
-            
-            bottomNavItems.forEach(item => {
-                const href = item.getAttribute('href');
-                if (href === currentPage || (currentPage === '' && href === 'index.html')) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
-            });
-        });
-
-        // Prevent zoom on double tap (iOS Safari)
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        // Add touch-target class to all buttons for mobile
-        if (window.innerWidth < 1024) {
-            document.addEventListener('DOMContentLoaded', function() {
-                const buttons = document.querySelectorAll('button, a[role="button"]');
-                buttons.forEach(btn => {
-                    if (!btn.classList.contains('touch-target')) {
-                        btn.classList.add('touch-target');
-                    }
-                });
-            });
-        }
-
-        // Update cart count on mobile nav as well
-        const originalUpdateCartCount = window.updateCartCount || function() {
-            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const count = cart.reduce((total, item) => total + (item.quantity || 1), 0);
-            const cartCountEl = document.getElementById('cart-count');
-            if (cartCountEl) cartCountEl.textContent = count;
-        };
-
-        // Mobile: Smooth scroll behavior
-        if (window.innerWidth < 768) {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-        }
-
-        // Add ripple effect to ripple class elements
-        document.addEventListener('click', function(e) {
-            const rippleElement = e.target.closest('.ripple');
-            if (rippleElement) {
-                // Ripple is handled by CSS :active pseudo-class
-                // This is just a placeholder for any additional ripple logic if needed
-            }
-        });
-
-      
-     
-    </script>
       <script>
     function openSearch() {
       document.getElementById('searchOverlay').classList.add('active');
@@ -2412,9 +2716,9 @@
       }
     });
   </script>
-    <script>
+  <script>
         // Configuration
-        const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds
+        const AUTO_SLIDE_INTERVAL = 5000; // 5 seconds - Autoplay ENABLED
         const CARDS_PER_VIEW = {
             mobile: 1,
             tablet: 2,
@@ -2580,15 +2884,241 @@
         updateSlider();
         startAutoSlide();
         
-        // Button click handlers
-        document.querySelectorAll('.shop-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const title = e.target.closest('.group').querySelector('h2').textContent.trim().replace(/\s+/g, ' ');
-                alert(`Opening ${title} collection...`);
+        // Toggle favorite function
+        function toggleFavorite(button) {
+            button.classList.toggle('active');
+        }
+        
+        // Quick view function
+        function quickView(productId) {
+            console.log(`Opening quick view for product ${productId}`);
+            alert(`Quick view for product ${productId}`);
+        }
+        
+        // Pause autoplay on slider interaction (arrow buttons)
+        const prevArrow = document.querySelector('.slider-arrow.prev');
+        const nextArrow = document.querySelector('.slider-arrow.next');
+        const sliderWrapper = document.querySelector('.slider-wrapper');
+        
+        if (prevArrow) {
+            prevArrow.addEventListener('click', () => {
+                resetAutoSlide();
             });
-        });
+        }
+        
+        if (nextArrow) {
+            nextArrow.addEventListener('click', () => {
+                resetAutoSlide();
+            });
+        }
+        
+        // Pause autoplay on hover for better UX
+        if (sliderWrapper) {
+            sliderWrapper.addEventListener('mouseenter', () => {
+                stopAutoSlide();
+            });
+            
+            sliderWrapper.addEventListener('mouseleave', () => {
+                startAutoSlide();
+            });
+        }
     </script>
 
+    <script>
+        // Configuration for Testimonials Slider
+        const TESTIMONIAL_AUTO_SLIDE_INTERVAL = 5000; // 5 seconds
+        const TESTIMONIAL_CARDS_PER_VIEW = {
+            mobile: 1,
+            tablet: 2,
+            desktop: 3
+        };
+        
+        // State
+        let testimonialCurrentIndex = 0;
+        let testimonialTotalCards = 8; // 8 testimonials
+        let testimonialCardsPerView = TESTIMONIAL_CARDS_PER_VIEW.mobile;
+        let testimonialAutoSlideTimer = null;
+        let testimonialTouchStartX = 0;
+        let testimonialTouchEndX = 0;
+        
+        // Elements
+        const testimonialSlider = document.getElementById('testimonialsSliderContainer');
+        const testimonialDotsContainer = document.getElementById('testimonialDots');
+        
+        // Get cards per view based on screen size
+        function updateTestimonialCardsPerView() {
+            const width = window.innerWidth;
+            if (width >= 1024) {
+                testimonialCardsPerView = TESTIMONIAL_CARDS_PER_VIEW.desktop;
+            } else if (width >= 640) {
+                testimonialCardsPerView = TESTIMONIAL_CARDS_PER_VIEW.tablet;
+            } else {
+                testimonialCardsPerView = TESTIMONIAL_CARDS_PER_VIEW.mobile;
+            }
+        }
+        
+        // Update slider position
+        function updateTestimonialSlider() {
+            const percentage = -(testimonialCurrentIndex * (100 / testimonialCardsPerView));
+            testimonialSlider.style.transform = `translateX(${percentage}%)`;
+            updateTestimonialDots();
+        }
+        
+        // Create navigation dots
+        function createTestimonialDots() {
+            const maxIndex = testimonialTotalCards - testimonialCardsPerView;
+            testimonialDotsContainer.innerHTML = '';
+            
+            for (let i = 0; i <= maxIndex; i++) {
+                const dot = document.createElement('button');
+                dot.className = 'w-3 h-3 rounded-full bg-gray-300 transition-all duration-300 hover:bg-gray-400';
+                dot.onclick = () => {
+                    testimonialCurrentIndex = i;
+                    updateTestimonialSlider();
+                    resetTestimonialAutoSlide();
+                };
+                testimonialDotsContainer.appendChild(dot);
+            }
+            updateTestimonialDots();
+        }
+        
+        // Update active dot
+        function updateTestimonialDots() {
+            const dots = testimonialDotsContainer.children;
+            Array.from(dots).forEach((dot, index) => {
+                if (index === testimonialCurrentIndex) {
+                    dot.className = 'w-3 h-3 rounded-full bg-[#2E6A64] transition-all duration-300 scale-125 shadow-lg testimonial-dot-active';
+                } else {
+                    dot.className = 'w-3 h-3 rounded-full bg-gray-300 transition-all duration-300 hover:bg-gray-400';
+                }
+            });
+        }
+        
+        // Navigate to next slide
+        function nextTestimonialSlide() {
+            const maxIndex = testimonialTotalCards - testimonialCardsPerView;
+            testimonialCurrentIndex = testimonialCurrentIndex >= maxIndex ? 0 : testimonialCurrentIndex + 1;
+            updateTestimonialSlider();
+        }
+        
+        // Navigate to previous slide
+        function prevTestimonialSlide() {
+            const maxIndex = testimonialTotalCards - testimonialCardsPerView;
+            testimonialCurrentIndex = testimonialCurrentIndex <= 0 ? maxIndex : testimonialCurrentIndex - 1;
+            updateTestimonialSlider();
+        }
+        
+        // Auto slide
+        function startTestimonialAutoSlide() {
+            stopTestimonialAutoSlide();
+            testimonialAutoSlideTimer = setInterval(() => {
+                nextTestimonialSlide();
+            }, TESTIMONIAL_AUTO_SLIDE_INTERVAL);
+        }
+        
+        function stopTestimonialAutoSlide() {
+            if (testimonialAutoSlideTimer) {
+                clearInterval(testimonialAutoSlideTimer);
+                testimonialAutoSlideTimer = null;
+            }
+        }
+        
+        function resetTestimonialAutoSlide() {
+            stopTestimonialAutoSlide();
+            startTestimonialAutoSlide();
+        }
+        
+        // Touch/Swipe handlers
+        testimonialSlider.addEventListener('touchstart', (e) => {
+            testimonialTouchStartX = e.changedTouches[0].screenX;
+            stopTestimonialAutoSlide();
+        });
+        
+        testimonialSlider.addEventListener('touchend', (e) => {
+            testimonialTouchEndX = e.changedTouches[0].screenX;
+            handleTestimonialSwipe();
+            startTestimonialAutoSlide();
+        });
+        
+        function handleTestimonialSwipe() {
+            const diff = testimonialTouchStartX - testimonialTouchEndX;
+            const threshold = 50;
+            
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    nextTestimonialSlide();
+                } else {
+                    prevTestimonialSlide();
+                }
+            }
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevTestimonialSlide();
+                resetTestimonialAutoSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextTestimonialSlide();
+                resetTestimonialAutoSlide();
+            }
+        });
+        
+        // Handle window resize
+        let testimonialResizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(testimonialResizeTimer);
+            testimonialResizeTimer = setTimeout(() => {
+                updateTestimonialCardsPerView();
+                testimonialCurrentIndex = 0;
+                createTestimonialDots();
+                updateTestimonialSlider();
+                resetTestimonialAutoSlide();
+            }, 300);
+        });
+        
+        // Pause when tab is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopTestimonialAutoSlide();
+            } else {
+                startTestimonialAutoSlide();
+            }
+        });
+        
+        // Initialize
+        updateTestimonialCardsPerView();
+        createTestimonialDots();
+        updateTestimonialSlider();
+        startTestimonialAutoSlide();
+        
+        // Pause autoplay on slider interaction (arrow buttons)
+        const testimonialPrevArrow = document.querySelector('.testimonials-slider-wrapper .slider-arrow.prev');
+        const testimonialNextArrow = document.querySelector('.testimonials-slider-wrapper .slider-arrow.next');
+        const testimonialSliderWrapper = document.querySelector('.testimonials-slider-wrapper');
+        
+        if (testimonialPrevArrow) {
+            testimonialPrevArrow.addEventListener('click', () => {
+                resetTestimonialAutoSlide();
+            });
+        }
+        
+        if (testimonialNextArrow) {
+            testimonialNextArrow.addEventListener('click', () => {
+                resetTestimonialAutoSlide();
+            });
+        }
+        
+        // Pause autoplay on hover for better UX
+        if (testimonialSliderWrapper) {
+            testimonialSliderWrapper.addEventListener('mouseenter', () => {
+                stopTestimonialAutoSlide();
+            });
+            
+            testimonialSliderWrapper.addEventListener('mouseleave', () => {
+                startTestimonialAutoSlide();
+            });
+        }
+    </script>
 </body>
 </html>

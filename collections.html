@@ -50,13 +50,11 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: #f5f5f5;
+            background: #f8f8f8;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             position: relative;
             overflow-x: hidden;
-            -webkit-overflow-scrolling: touch;
-            touch-action: pan-y pinch-zoom;
         }
 
         .safe-area-bottom {
@@ -175,29 +173,35 @@
             color: #7f1d1d;
         }
 
+        /* ============================================ */
+        /* ENHANCED CATEGORY CARDS FOR DESKTOP */
+        /* ============================================ */
+
         /* Category Card with Red Border Effect */
         .category-card {
             position: relative;
             background: linear-gradient(135deg, #b91c1c 0%, #991b1b 50%, #7f1d1d 100%);
-            border-radius: 24px;
-            padding: 10px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 28px;
+            padding: 12px;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            box-shadow: 0 8px 24px rgba(185, 28, 28, 0.25);
+            box-shadow: 0 10px 30px rgba(185, 28, 28, 0.3);
+            height: 100%;
         }
 
         .category-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(185, 28, 28, 0.35);
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(185, 28, 28, 0.4);
         }
 
         /* Inner Container */
         .card-inner {
             position: relative;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            aspect-ratio: 16 / 9;
             background: #000;
+            height: 100%;
+            min-height: 280px;
         }
 
         /* Image Styling */
@@ -205,11 +209,11 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .category-card:hover .card-image {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
         /* Dark Gradient Overlay */
@@ -218,9 +222,9 @@
             inset: 0;
             background: linear-gradient(
                 to bottom,
-                rgba(0, 0, 0, 0.2) 0%,
+                rgba(0, 0, 0, 0.1) 0%,
                 rgba(0, 0, 0, 0.4) 50%,
-                rgba(0, 0, 0, 0.7) 100%
+                rgba(0, 0, 0, 0.75) 100%
             );
             z-index: 1;
         }
@@ -231,7 +235,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 28px 24px;
+            padding: 32px 28px;
             text-align: center;
             z-index: 2;
         }
@@ -239,66 +243,138 @@
         /* Title Styling */
         .card-title {
             font-family: 'Playfair Display', serif;
-           
+            font-size: 1.75rem;
             font-weight: 700;
             color: white;
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            line-height: 1.2;
-            text-shadow: 2px 4px 12px rgba(0, 0, 0, 0.6);
-            transition: all 0.3s ease;
+            letter-spacing: 0.18em;
+            line-height: 1.3;
+            text-shadow: 2px 4px 16px rgba(0, 0, 0, 0.7);
+            transition: all 0.4s ease;
             margin: 0;
         }
 
         .category-card:hover .card-title {
-            letter-spacing: 0.22em;
-            transform: scale(1.05);
-            text-shadow: 3px 6px 16px rgba(0, 0, 0, 0.8);
+            letter-spacing: 0.25em;
+            transform: scale(1.08);
+            text-shadow: 3px 6px 20px rgba(0, 0, 0, 0.9);
         }
 
         /* Grid Responsive Layout */
         .category-grid {
             display: grid;
-            gap: 32px;
+            gap: 28px;
             grid-template-columns: 1fr;
         }
 
         /* Mobile: Single Column */
         @media (max-width: 767px) {
             .category-grid {
-                gap: 24px;
+                gap: 20px;
+            }
+            
+            .card-inner {
+                min-height: 240px;
             }
             
             .card-title {
-                font-size: 1.5rem;
-                letter-spacing: 0.12em;
+                font-size: 1.4rem;
+                letter-spacing: 0.15em;
             }
             
             .category-card {
                 padding: 8px;
+                border-radius: 20px;
+            }
+
+            .card-text {
+                padding: 24px 20px;
             }
         }
 
-        /* Tablet: 2 Columns */
+        /* Tablet: 2 Columns - LARGER */
         @media (min-width: 768px) and (max-width: 1023px) {
             .category-grid {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 28px;
+                gap: 32px;
+            }
+
+            .card-inner {
+                min-height: 320px;
+            }
+
+            .card-title {
+                font-size: 2rem;
+            }
+
+            .card-text {
+                padding: 36px 32px;
             }
         }
 
-        /* Desktop: 3 Columns */
+        /* Desktop: 3 Columns - MUCH LARGER */
         @media (min-width: 1024px) {
             .category-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 36px;
+                gap: 40px;
+            }
+
+            .card-inner {
+                min-height: 400px;
+            }
+
+            .card-title {
+                font-size: 2.25rem;
+                letter-spacing: 0.2em;
+            }
+
+            .card-text {
+                padding: 40px 36px;
+            }
+
+            .category-card {
+                border-radius: 32px;
+                padding: 14px;
             }
         }
 
-        /* Large Desktop: Optimized spacing */
+        /* Large Desktop: EVEN LARGER with 2 columns for better visibility */
         @media (min-width: 1440px) {
             .category-grid {
-                gap: 40px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 48px;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            .card-inner {
+                min-height: 500px;
+            }
+
+            .card-title {
+                font-size: 2.75rem;
+                letter-spacing: 0.22em;
+            }
+
+            .card-text {
+                padding: 48px 40px;
+            }
+        }
+
+        /* Extra Large Desktop: Maximum Impact */
+        @media (min-width: 1920px) {
+            .category-grid {
+                gap: 56px;
+                max-width: 1600px;
+            }
+
+            .card-inner {
+                min-height: 580px;
+            }
+
+            .card-title {
+                font-size: 3rem;
+                letter-spacing: 0.25em;
             }
         }
 
@@ -306,7 +382,7 @@
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
@@ -315,7 +391,7 @@
         }
 
         .animate-fade-in {
-            animation: fadeInUp 0.8s ease-out forwards;
+            animation: fadeInUp 0.9s ease-out forwards;
         }
 
         /* Staggered Animation Delays */
@@ -335,7 +411,47 @@
         /* Accessibility - Focus States */
         .category-card:focus-visible {
             outline: 4px solid #b91c1c;
-            outline-offset: 4px;
+            outline-offset: 6px;
+        }
+
+        /* Section Header Enhanced */
+        .section-header-title {
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .section-header-title {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .section-header-title {
+                font-size: 4.5rem;
+            }
+        }
+
+        @media (min-width: 1440px) {
+            .section-header-title {
+                font-size: 5rem;
+            }
+        }
+
+        .section-description {
+            font-size: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .section-description {
+                font-size: 1.125rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .section-description {
+                font-size: 1.25rem;
+            }
         }
     </style>
 </head>
@@ -387,7 +503,6 @@
             </div>
 
             <div class="search-content" id="searchResults">
-                <!-- Search results will appear here -->
                 <div class="py-12 text-center text-gray-400">
                     <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -604,25 +719,25 @@
     <!-- MAIN CONTENT - SHOP BY CATEGORY -->
     <!-- ============================================ -->
     <main class="w-full mb-20 md:mb-0">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20">
+        <div class="max-w-[1800px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 py-12 sm:py-16 lg:py-24 xl:py-28">
             
-            <!-- Section Header -->
-            <div class="text-center mb-10 sm:mb-14 lg:mb-16 animate-fade-in">
-                <h1 class="font-playfair text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 mb-4 tracking-wide">
+            <!-- Section Header - ENHANCED -->
+            <div class="text-center mb-12 sm:mb-16 lg:mb-20 xl:mb-24 animate-fade-in">
+                <h1 class="section-header-title font-playfair font-bold text-gray-900 mb-4 md:mb-6 tracking-wide">
                     Shop by Category
                 </h1>
-                <p class="text-gray-600 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto font-light leading-relaxed">
-                    Explore our exquisite collection of handcrafted ethnic wear
+                <p class="section-description text-gray-600 max-w-3xl mx-auto font-light leading-relaxed">
+                    Explore our exquisite collection of handcrafted ethnic wear, curated with passion and designed to make you feel extraordinary
                 </p>
             </div>
 
-            <!-- Category Grid -->
+            <!-- Category Grid - ENHANCED FOR DESKTOP -->
             <section id="categories" class="category-grid">
                 
                 <!-- Card 1: Anarkali Suit Sets -->
                 <article class="category-card animate-fade-in" tabindex="0" role="button" aria-label="Browse Anarkali Suit Sets Collection">
                     <div class="card-inner">
-                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=450&fit=crop&q=80" 
+                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=1200&h=800&fit=crop&q=85" 
                              alt="Woman wearing elegant red Anarkali suit set in garden" 
                              class="card-image" 
                              loading="eager">
@@ -636,7 +751,7 @@
                 <!-- Card 2: Classic Festive Kurtas -->
                 <article class="category-card animate-fade-in" tabindex="0" role="button" aria-label="Browse Classic Festive Kurtas Collection">
                     <div class="card-inner">
-                        <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800&h=450&fit=crop&q=80" 
+                        <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=1200&h=800&fit=crop&q=85" 
                              alt="Two women wearing purple and pink festive kurtas" 
                              class="card-image" 
                              loading="lazy">
@@ -650,7 +765,7 @@
                 <!-- Card 3: Sharara Suit Sets -->
                 <article class="category-card animate-fade-in" tabindex="0" role="button" aria-label="Browse Sharara Suit Sets Collection">
                     <div class="card-inner">
-                        <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=800&h=450&fit=crop&q=80" 
+                        <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=1200&h=800&fit=crop&q=85" 
                              alt="Woman in cream Sharara suit set with floral decorations" 
                              class="card-image" 
                              loading="lazy">
@@ -664,7 +779,7 @@
                 <!-- Card 4: Co-ord Sets -->
                 <article class="category-card animate-fade-in" tabindex="0" role="button" aria-label="Browse Co-ord Sets Collection">
                     <div class="card-inner">
-                        <img src="https://images.unsplash.com/photo-1614030424754-24d0eebd46b2?w=800&h=450&fit=crop&q=80" 
+                        <img src="https://images.unsplash.com/photo-1614030424754-24d0eebd46b2?w=1200&h=800&fit=crop&q=85" 
                              alt="Woman in yellow co-ord set with statement jewelry" 
                              class="card-image" 
                              loading="lazy">
@@ -678,7 +793,7 @@
                 <!-- Card 5: Glam Sarees -->
                 <article class="category-card animate-fade-in" tabindex="0" role="button" aria-label="Browse Glam Sarees Collection">
                     <div class="card-inner">
-                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&h=450&fit=crop&q=80" 
+                        <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=1200&h=800&fit=crop&q=85" 
                              alt="Woman wearing golden glam saree in elegant pose" 
                              class="card-image" 
                              loading="lazy">
@@ -692,7 +807,7 @@
                 <!-- Card 6: Contemporary Jhumkas -->
                 <article class="category-card animate-fade-in" tabindex="0" role="button" aria-label="Browse Contemporary Jhumkas Collection">
                     <div class="card-inner">
-                        <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=800&h=450&fit=crop&q=80" 
+                        <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=1200&h=800&fit=crop&q=85" 
                              alt="Close-up of contemporary jhumka earrings" 
                              class="card-image" 
                              loading="lazy">
@@ -923,7 +1038,6 @@
                 </div>
             `;
 
-            // Simulate search delay
             setTimeout(() => {
                 resultsContainer.innerHTML = `
                     <div class="py-12 text-center">
@@ -938,15 +1052,10 @@
         }
 
         function filterByCategory(category, element) {
-            // Remove active class from all chips
             document.querySelectorAll('.category-chip').forEach(chip => {
                 chip.classList.remove('active');
             });
-            
-            // Add active class to clicked chip
             element.classList.add('active');
-            
-            // Trigger search with current query
             const query = document.getElementById('searchInput').value;
             handleSearch(query);
         }
@@ -974,17 +1083,12 @@
                 const title = this.querySelector('.card-title').textContent.trim();
                 console.log(`Navigating to: ${title}`);
                 
-                // Add click animation
                 this.style.transform = 'scale(0.98)';
                 setTimeout(() => {
                     this.style.transform = '';
                 }, 150);
-                
-                // Implement your navigation logic here
-                // Example: window.location.href = `/category/${title.toLowerCase().replace(/\s+/g, '-')}`;
             });
 
-            // Keyboard accessibility
             card.addEventListener('keydown', function(e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -1026,15 +1130,6 @@
             }
         });
 
-        // Performance: Debounced resize handler
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                console.log('Viewport resized - layout adjusted');
-            }, 250);
-        });
-
         // Add animation classes on page load
         window.addEventListener('load', () => {
             document.querySelectorAll('.animate-fade-in').forEach(el => {
@@ -1044,9 +1139,9 @@
 
         // Initialize
         window.addEventListener('DOMContentLoaded', function() {
-            console.log('🛍️ Krambica Shop by Category - Loaded!');
-            console.log('📱 Mobile-optimized interface active');
-            console.log('🎨 Responsive design: 320px - 4K displays');
+            console.log('🛍️ Krambica Shop by Category - Desktop Optimized!');
+            console.log('📱 Mobile: Compact & Beautiful');
+            console.log('🖥️ Desktop: Large & Impactful');
         });
     </script>
 
