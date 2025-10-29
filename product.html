@@ -155,6 +155,226 @@
             background: #2E6A64;
             cursor: pointer;
         }
+
+        /* Shop by Category Styles */
+        .category-circle {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid transparent;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-circle:hover {
+            transform: translateY(-8px) scale(1.05);
+            border-color: #2E6A64;
+            box-shadow: 0 8px 25px rgba(46, 106, 100, 0.3);
+        }
+
+        .category-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .category-circle:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+            margin-top: 12px;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .category-circle:hover + .category-label {
+            color: #2E6A64;
+        }
+
+        @media (max-width: 768px) {
+            .category-circle {
+                width: 100px;
+                height: 100px;
+            }
+            .category-label {
+                font-size: 12px;
+            }
+        }
+
+        /* Enhanced Notification Styles */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .notification-enter {
+            animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .notification-exit {
+            animation: slideOutRight 0.3s ease-in;
+        }
+
+        .notification-container {
+            position: fixed;
+            top: 120px;
+            right: 20px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .notification {
+            pointer-events: auto;
+            min-width: 300px;
+            max-width: 400px;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 640px) {
+            .notification-container {
+                right: 10px;
+                left: 10px;
+                top: 100px;
+            }
+            .notification {
+                min-width: unset;
+                max-width: unset;
+            }
+        }
+
+        /* Notification Popup Styles */
+        .notification-popup {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            width: 400px;
+            max-height: 600px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            z-index: 9998;
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .notification-popup.show {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        @media (max-width: 640px) {
+            .notification-popup {
+                right: 10px;
+                left: 10px;
+                width: auto;
+                top: 80px;
+            }
+        }
+
+        .notification-popup-header {
+            background: linear-gradient(135deg, #2E6A64 0%, #3a8077 100%);
+            color: white;
+            padding: 16px 20px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-popup-body {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .notification-popup-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .notification-popup-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .notification-popup-body::-webkit-scrollbar-thumb {
+            background: #2E6A64;
+            border-radius: 3px;
+        }
+
+        .notification-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .notification-item:hover {
+            background: #f9fafb;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 10px;
+            min-width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .notification-badge.pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
     </style>
 
     <script>
@@ -176,6 +396,36 @@
     </script>
 </head>
 <body class="font-sans bg-gradient-to-br from-gray-50 to-teal-50 min-h-screen overflow-x-hidden">
+    <!-- Notification Container -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- Notification Popup -->
+    <div id="notification-popup" class="notification-popup">
+        <div class="notification-popup-header">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+                <span>Notifications</span>
+                <span id="notification-popup-count" class="ml-2 bg-white/20 px-2 py-0.5 rounded-full text-xs">0</span>
+            </div>
+            <button onclick="toggleNotificationPopup()" class="hover:bg-white/10 rounded-full p-1 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div id="notification-popup-body" class="notification-popup-body">
+            <div class="flex flex-col items-center justify-center py-16 px-4 text-gray-400">
+                <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                </svg>
+                <p class="text-center font-medium">No notifications yet</p>
+                <p class="text-sm text-center mt-1">We'll notify you when something new arrives</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Top Banner -->
     <div id="top-banner" class=" from-primary to-teal-600 text-gray-800 text-center py-3 px-4 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
@@ -243,6 +493,12 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                         </svg>
                     </button>
+                    <button onclick="toggleNotificationPopup()" aria-label="Notifications" class="relative flex items-center justify-center w-10 h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                        <span id="notification-badge" class="notification-badge pulse" style="display: none;">0</span>
+                    </button>
                     <button onclick="window.location.href='cart.html'" aria-label="Cart" class="relative group flex items-center justify-center w-10 h-10 rounded-full text-gray-700 hover:bg-primary/10 hover:text-primary transition-all duration-300">
                         <svg class="w-6 h-6 transform group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -288,6 +544,70 @@
             </div>
         </div>
     </nav>
+
+    <!-- Shop By Category Section -->
+    <section class="py-8 md:py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-8 md:mb-12 font-serif text-gray-800">Shop By Category</h2>
+            <div class="flex flex-wrap justify-center items-start gap-6 md:gap-8 lg:gap-12">
+                <!-- Footwear -->
+                <div class="flex flex-col items-center" onclick="filterByCategory('accessories')">
+                    <div class="category-circle">
+                        <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=300&h=300&fit=crop" alt="Footwear">
+                    </div>
+                    <p class="category-label">Footwear</p>
+                </div>
+
+                <!-- Handbags -->
+                <div class="flex flex-col items-center" onclick="filterByCategory('accessories')">
+                    <div class="category-circle">
+                        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&h=300&fit=crop" alt="Handbags">
+                    </div>
+                    <p class="category-label">Handbags</p>
+                </div>
+
+                <!-- Potlis -->
+                <div class="flex flex-col items-center" onclick="filterByCategory('accessories')">
+                    <div class="category-circle">
+                        <img src="https://images.unsplash.com/photo-1590874103328-eac38a683ce7?w=300&h=300&fit=crop" alt="Potlis">
+                    </div>
+                    <p class="category-label">Potlis</p>
+                </div>
+
+                <!-- Shawls -->
+                <div class="flex flex-col items-center" onclick="filterByCategory('accessories')">
+                    <div class="category-circle">
+                        <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=300&h=300&fit=crop" alt="Shawls">
+                    </div>
+                    <p class="category-label">Shawls</p>
+                </div>
+
+                <!-- Hair Accessories -->
+                <div class="flex flex-col items-center" onclick="filterByCategory('accessories')">
+                    <div class="category-circle">
+                        <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=300&fit=crop" alt="Hair Accessories">
+                    </div>
+                    <p class="category-label">Hair Accessories</p>
+                </div>
+
+                <!-- Stoles & Scarves -->
+                <div class="flex flex-col items-center" onclick="filterByCategory('accessories')">
+                    <div class="category-circle">
+                        <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=300&h=300&fit=crop" alt="Stoles & Scarves">
+                    </div>
+                    <p class="category-label">Stoles & Scarves</p>
+                </div>
+
+                <!-- Belts -->
+                <div class="flex flex-col items-center" onclick="filterByCategory('accessories')">
+                    <div class="category-circle">
+                        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop" alt="Belts">
+                    </div>
+                    <p class="category-label">Belts</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Products Hero Section -->
     <section class="py-8 md:py-12 pb-24 md:pb-12">
@@ -672,11 +992,255 @@
         let currentSort = 'default';
         let maxPrice = 25000;
 
+        // Notification History Storage
+        let notificationHistory = JSON.parse(localStorage.getItem('notificationHistory') || '[]');
+
+        // Enhanced Notification System
+        class NotificationManager {
+            constructor() {
+                this.container = document.getElementById('notification-container');
+                this.notifications = [];
+            }
+
+            show(message, type = 'success', productData = null) {
+                const notification = this.createNotification(message, type, productData);
+                this.notifications.push(notification);
+                this.container.appendChild(notification);
+
+                // Save to history
+                this.saveToHistory(message, type, productData);
+
+                // Auto remove after 4 seconds
+                setTimeout(() => {
+                    this.remove(notification);
+                }, 4000);
+            }
+
+            saveToHistory(message, type, productData) {
+                const notificationItem = {
+                    id: Date.now(),
+                    message,
+                    type,
+                    productData,
+                    timestamp: new Date().toISOString(),
+                    read: false
+                };
+
+                notificationHistory.unshift(notificationItem);
+                
+                // Keep only last 50 notifications
+                if (notificationHistory.length > 50) {
+                    notificationHistory = notificationHistory.slice(0, 50);
+                }
+                
+                localStorage.setItem('notificationHistory', JSON.stringify(notificationHistory));
+                updateNotificationBadge();
+            }
+
+            createNotification(message, type, productData) {
+                const div = document.createElement('div');
+                div.className = 'notification notification-enter';
+
+                const colors = {
+                    success: 'bg-gradient-to-r from-green-500 to-emerald-600',
+                    error: 'bg-gradient-to-r from-red-500 to-rose-600',
+                    info: 'bg-gradient-to-r from-blue-500 to-indigo-600',
+                    warning: 'bg-gradient-to-r from-yellow-500 to-orange-600'
+                };
+
+                const icons = {
+                    success: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                    error: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                    info: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                    warning: '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>'
+                };
+
+                if (productData) {
+                    div.innerHTML = `
+                        <div class="${colors[type]} text-white p-4 flex items-start gap-3 shadow-xl">
+                            <div class="flex-shrink-0 mt-0.5">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    ${icons[type]}
+                                </svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <img src="${productData.image}" alt="${productData.name}" class="w-12 h-12 rounded-lg object-cover border-2 border-white/30">
+                                    <div class="flex-1">
+                                        <p class="font-bold text-sm">${message}</p>
+                                        <p class="text-xs text-white/90 mt-0.5">${productData.name}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between text-xs bg-white/10 rounded-lg p-2 backdrop-blur-sm">
+                                    <span>Price: ₹${productData.price.toFixed(2)}</span>
+                                    <span>•</span>
+                                    <span>Quantity: ${productData.quantity || 1}</span>
+                                </div>
+                            </div>
+                            <button onclick="notificationManager.remove(this.parentElement.parentElement)" class="flex-shrink-0 hover:bg-white/20 rounded-full p-1 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                } else {
+                    div.innerHTML = `
+                        <div class="${colors[type]} text-white p-4 flex items-center gap-3 shadow-xl rounded-xl">
+                            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                ${icons[type]}
+                            </svg>
+                            <span class="font-semibold flex-1">${message}</span>
+                            <button onclick="notificationManager.remove(this.parentElement.parentElement)" class="flex-shrink-0 hover:bg-white/20 rounded-full p-1 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </button>
+                        </div>
+                    `;
+                }
+
+                return div;
+            }
+
+            remove(notification) {
+                notification.classList.remove('notification-enter');
+                notification.classList.add('notification-exit');
+
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                        this.notifications = this.notifications.filter(n => n !== notification);
+                    }
+                }, 300);
+            }
+        }
+
+        // Initialize Notification Manager
+        const notificationManager = new NotificationManager();
+
+        // Notification Popup Functions
+        function toggleNotificationPopup() {
+            const popup = document.getElementById('notification-popup');
+            const isVisible = popup.classList.contains('show');
+            
+            if (isVisible) {
+                popup.classList.remove('show');
+            } else {
+                popup.classList.add('show');
+                renderNotificationHistory();
+                markAllAsRead();
+            }
+        }
+
+        function renderNotificationHistory() {
+            const body = document.getElementById('notification-popup-body');
+            
+            if (notificationHistory.length === 0) {
+                body.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-16 px-4 text-gray-400">
+                        <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                        </svg>
+                        <p class="text-center font-medium">No notifications yet</p>
+                        <p class="text-sm text-center mt-1">We'll notify you when something new arrives</p>
+                    </div>
+                `;
+                return;
+            }
+
+            body.innerHTML = notificationHistory.map(item => {
+                const timeAgo = getTimeAgo(new Date(item.timestamp));
+                const typeColors = {
+                    success: 'text-green-600',
+                    error: 'text-red-600',
+                    info: 'text-blue-600',
+                    warning: 'text-yellow-600'
+                };
+
+                if (item.productData) {
+                    return `
+                        <div class="notification-item">
+                            <div class="flex items-start gap-3">
+                                <img src="${item.productData.image}" alt="${item.productData.name}" class="w-14 h-14 rounded-lg object-cover flex-shrink-0">
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-semibold text-sm text-gray-800 mb-1">${item.message}</p>
+                                    <p class="text-xs text-gray-600 mb-2">${item.productData.name}</p>
+                                    <div class="flex items-center justify-between text-xs text-gray-500">
+                                        <span>₹${item.productData.price}</span>
+                                        <span>${timeAgo}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="notification-item">
+                            <div class="flex items-start gap-3">
+                                <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
+                                    <span class="${typeColors[item.type]} text-lg">
+                                        ${item.type === 'success' ? '✓' : item.type === 'error' ? '✕' : item.type === 'warning' ? '⚠' : 'ℹ'}
+                                    </span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-semibold text-sm text-gray-800 mb-1">${item.message}</p>
+                                    <p class="text-xs text-gray-500">${timeAgo}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';
+            if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
+            if (seconds < 604800) return Math.floor(seconds / 86400) + 'd ago';
+            return date.toLocaleDateString();
+        }
+
+        function updateNotificationBadge() {
+            const unreadCount = notificationHistory.filter(n => !n.read).length;
+            const badge = document.getElementById('notification-badge');
+            const popupCount = document.getElementById('notification-popup-count');
+            
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+                badge.style.display = 'flex';
+                popupCount.textContent = unreadCount;
+            } else {
+                badge.style.display = 'none';
+                popupCount.textContent = '0';
+            }
+        }
+
+        function markAllAsRead() {
+            notificationHistory.forEach(n => n.read = true);
+            localStorage.setItem('notificationHistory', JSON.stringify(notificationHistory));
+            updateNotificationBadge();
+        }
+
+        // Close popup when clicking outside
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('notification-popup');
+            const notificationBtn = event.target.closest('[aria-label="Notifications"]');
+            
+            if (!popup.contains(event.target) && !notificationBtn && popup.classList.contains('show')) {
+                popup.classList.remove('show');
+            }
+        });
+
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             const cart = JSON.parse(localStorage.getItem('cart') || '[]');
             updateCartCount(cart.length);
             renderProducts();
+            updateNotificationBadge();
 
             // Mobile menu toggle
             document.getElementById('mobile-menu-toggle').addEventListener('click', function() {
@@ -695,6 +1259,14 @@
             document.getElementById('close-filter').addEventListener('click', function() {
                 document.getElementById('filter-section').classList.remove('show');
             });
+
+            // Smooth scroll to products when category is clicked
+            window.scrollToProducts = function() {
+                const productsSection = document.querySelector('#products-container');
+                if (productsSection) {
+                    productsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            };
         });
 
         // Filter by category
@@ -708,6 +1280,7 @@
             event.target.classList.add('active');
 
             applyFilters();
+            scrollToProducts();
         }
 
         // Sort products
@@ -772,6 +1345,7 @@
             document.getElementById('price-display').textContent = '25,000';
 
             applyFilters();
+            notificationManager.show('All filters cleared!', 'info');
         }
 
         // Render products
@@ -800,7 +1374,7 @@
                                 ${Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}% OFF
                             </span>
                         </div>
-                        <button onclick="toggleWishlist(event, ${product.id})" class="absolute top-3 left-3 md:top-5 md:left-5 w-10 h-10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center hover:bg-red-50 transition-all duration-300 hover:scale-110 shadow-lg z-10">
+                        <button onclick="toggleWishlist(event, ${product.id})" class="absolute top-3 left-3 md:top-5 md:left-5 -10 md:w-12 md:h-12 bg-white rounded-full flex items-center justify-center hover:bg-red-50 transition-all duration-300 hover:scale-110 shadow-lg z-10">
                             <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
@@ -809,7 +1383,7 @@
                     <div class="p-3 md:p-4 lg:p-6 flex flex-col flex-grow">
                         <div class="flex items-start justify-between mb-2 md:mb-3">
                             <h3 class="font-bold text-sm md:text-base lg:text-xl text-gray-900 leading-tight flex-1 line-clamp-2">${product.name}</h3>
-                            <div class="hidden md:flex text-yellow-500 text-xs ml-2">★★★★★</div>
+                            <div class="hidden md:flex text-yellow-500 text-xs ml-2"></div>
                         </div>
                         <p class="text-gray-600 text-xs md:text-sm mb-3 md:mb-4 leading-relaxed line-clamp-2">${product.description}</p>
                         <div class="flex flex-col md:flex-row md:items-center gap-1 md:gap-2 mb-2 md:mb-3">
@@ -817,7 +1391,7 @@
                             <span class="text-sm md:text-base lg:text-lg text-gray-400 line-through">₹${product.originalPrice.toFixed(2)}</span>
                         </div>
                         <div class="mb-3 md:mb-4">
-                            <span class="text-xs md:text-sm text-green-600 font-semibold">💰 Save ₹${(product.originalPrice - product.price).toFixed(2)}</span>
+                            <span class="text-xs md:text-sm text-green-600 font-semibold">Save ₹${(product.originalPrice - product.price).toFixed(2)}</span>
                         </div>
                         <button onclick="addToCart(${product.id})" class="w-full bg-gradient-to-r from-primary to-teal-600 text-white px-4 py-2.5 md:px-6 md:py-3 rounded-lg font-semibold hover:from-teal-600 hover:to-primary transition-all duration-300 flex items-center justify-center gap-2 text-xs md:text-sm lg:text-base shadow-md hover:shadow-lg mt-auto">
                             <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -844,7 +1418,6 @@
                             if (playTimeout) {
                                 clearTimeout(playTimeout);
                             }
-
                             video.play().then(() => {
                                 isPlaying = true;
                                 image.style.opacity = '0';
@@ -880,7 +1453,6 @@
 
                     card.addEventListener('touchend', (e) => {
                         if (e.target.closest('button') || e.target.closest('a')) return;
-
                         const touchDuration = Date.now() - touchStartTime;
                         if (touchDuration < 200) {
                             if (!isPlaying) {
@@ -902,11 +1474,12 @@
         // Toggle wishlist
         function toggleWishlist(event, productId) {
             event.stopPropagation();
+
             const btn = event.currentTarget;
             const svg = btn.querySelector('svg');
-
             let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
             const isInWishlist = wishlist.includes(productId);
+            const product = allProducts.find(p => p.id === productId);
 
             if (isInWishlist) {
                 wishlist = wishlist.filter(id => id !== productId);
@@ -914,13 +1487,16 @@
                 btn.classList.add('bg-white');
                 svg.setAttribute('fill', 'none');
                 svg.setAttribute('stroke', 'currentColor');
+                notificationManager.show('Removed from wishlist', 'info', { ...product, quantity: 1 });
             } else {
                 wishlist.push(productId);
                 btn.classList.remove('bg-white');
                 btn.classList.add('bg-red-500');
                 svg.setAttribute('fill', 'white');
                 svg.setAttribute('stroke', 'white');
+                notificationManager.show('Added to wishlist!', 'success', { ...product, quantity: 1 });
             }
+
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
         }
 
@@ -931,10 +1507,12 @@
 
             let cart = JSON.parse(localStorage.getItem('cart') || '[]');
             const existingItem = cart.find(item => item.id === productId);
+
             if (existingItem) {
                 existingItem.quantity += 1;
+                notificationManager.show(`Updated quantity to ${existingItem.quantity}`, 'success', existingItem);
             } else {
-                cart.push({
+                const cartItem = {
                     id: product.id,
                     name: product.name,
                     price: product.price,
@@ -942,27 +1520,13 @@
                     image: product.image,
                     video: product.video,
                     quantity: 1
-                });
+                };
+                cart.push(cartItem);
+                notificationManager.show('Added to cart!', 'success', cartItem);
             }
+
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount(cart.length);
-
-            // Show success notification
-            const notification = document.createElement('div');
-            notification.className = 'fixed top-24 right-4 bg-green-500 text-white px-6 py-4 rounded-lg shadow-2xl z-50 animate-slide-in-right';
-            notification.innerHTML = `
-                <div class="flex items-center gap-3">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    </svg>
-                    <span class="font-semibold">${product.name} added to cart!</span>
-                </div>
-            `;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
         }
 
         // Update cart count
@@ -970,39 +1534,5 @@
             document.getElementById('cart-count').textContent = count;
         }
     </script>
-
-    <!-- Mobile Bottom Navigation -->
-    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-lg z-50 safe-area-bottom">
-        <div class="flex items-center justify-around py-3">
-            <a href="index.html" class="flex flex-col items-center justify-center px-4 py-2 text-gray-600 hover:text-primary transition-colors">
-                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
-                </svg>
-                <span class="text-xs font-semibold">Home</span>
-            </a>
-
-            <a href="product.html" class="flex flex-col items-center justify-center px-4 py-2 text-primary transition-colors">
-                <svg class="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                </svg>
-                <span class="text-xs font-semibold">Products</span>
-            </a>
-
-            <a href="sale.html" class="flex flex-col items-center justify-center px-4 py-2 text-gray-600 hover:text-primary relative transition-colors">
-                <div class="absolute -top-1 right-2 bg-red-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full">HOT</div>
-                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                </svg>
-                <span class="text-xs font-semibold">Sale</span>
-            </a>
-
-            <a href="profile.html" class="flex flex-col items-center justify-center px-4 py-2 text-gray-600 hover:text-primary transition-colors">
-                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-                <span class="text-xs font-semibold">Profile</span>
-            </a>
-        </div>
-    </nav>
 </body>
 </html>
