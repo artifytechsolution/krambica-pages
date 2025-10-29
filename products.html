@@ -809,7 +809,7 @@
             const isInCart = cart.some(item => item.id === product.id);
             
             return `
-                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative">
+                <div class="group bg-white  overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative">
                     <div class="relative overflow-hidden aspect-[3/4] bg-gray-100">
                         <img 
                             src="${product.image}" 
@@ -854,7 +854,7 @@
                         <a href="product-details.html?id=${product.id}" class="block mb-3 text-sm text-primary hover:underline">
                         <button 
                             onclick="addToCart(${product.id})" 
-                            class="w-full py-2.5 md:py-3 bg-gradient-to-r from-primary to-teal-600 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg active:scale-95 text-sm md:text-base"
+                            class="w-full hidden md:block py-2.5 md:py-3 bg-gradient-to-r from-primary to-teal-600 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg active:scale-95 text-sm md:text-base"
                         >
                            Buy now
                         </button>

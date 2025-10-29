@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curated Collections</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'poppins': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap');
+        
+        /* Swiper Navigation Button Styling */
+        :root {
+            --swiper-navigation-size: 44px;
+            --swiper-navigation-color: #000000;
+        }
+        
+        .swiper-button-next,
+        .swiper-button-prev {
+            width: 50px !important;
+            height: 50px !important;
+            background: white !important;
+            border-radius: 50% !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25) !important;
+            transform: scale(1.1);
+        }
+        
+        .swiper-button-next::after,
+        .swiper-button-prev::after {
+            font-size: 20px !important;
+            font-weight: 900 !important;
+            color: #000000 !important;
+        }
+        
+        /* Hide on mobile */
+        @media (max-width: 768px) {
+            .swiper-button-next,
+            .swiper-button-prev {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white font-poppins">
+    
+    <!-- Main Section -->
+    <section class="py-12 lg:py-20 bg-white">
+        <!-- Section Title -->
+        <div class="text-center mb-8 lg:mb-12">
+            <h2 class="font-playfair text-3xl lg:text-4xl xl:text-5xl font-normal text-gray-900 tracking-wide">
+                Curated Collections
+            </h2>
+        </div>
+        
+        <!-- Collections Slider -->
+        <div class="container mx-auto max-w-7xl px-4">
+            <div class="swiper collectionsSwiper relative w-full pb-16">
+                <div class="swiper-wrapper">
+                    
+                    <!-- Slide 1: Sequins Collection -->
+                    <div class="swiper-slide">
+                        <div class="relative overflow-hidden h-[450px] lg:h-[500px] cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=800&q=80" 
+                                 alt="Sequins Collection"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                 loading="lazy">
+                            <!-- Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                            <!-- Content -->
+                            <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 flex flex-col items-center justify-end text-center z-10">
+                                <h3 class="font-playfair text-white text-2xl lg:text-3xl font-normal mb-2 tracking-wide">
+                                    Sequins Collection
+                                </h3>
+                                <p class="text-white text-sm mb-5 font-light">
+                                    Get 7% OFF* | Use Code: GLAM7
+                                </p>
+                                <button class="bg-white text-black px-10 py-3.5 text-sm font-semibold uppercase tracking-widest border-2 border-white transition-all duration-300 hover:bg-transparent hover:text-white">
+                                    SHOP NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2: Cape Styles -->
+                    <div class="swiper-slide">
+                        <div class="relative overflow-hidden h-[450px] lg:h-[500px] cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=800&q=80" 
+                                 alt="Cape Styles For You"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                 loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 flex flex-col items-center justify-end text-center z-10">
+                                <h3 class="font-playfair text-white text-2xl lg:text-3xl font-normal mb-2 tracking-wide">
+                                    Cape Styles For You
+                                </h3>
+                                <p class="text-white text-sm mb-5 font-light">
+                                    Get 7% OFF* | Use Code: GLAM7
+                                </p>
+                                <button class="bg-white text-black px-10 py-3.5 text-sm font-semibold uppercase tracking-widest border-2 border-white transition-all duration-300 hover:bg-transparent hover:text-white">
+                                    SHOP NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3: Printed Pret Collection -->
+                    <div class="swiper-slide">
+                        <div class="relative overflow-hidden h-[450px] lg:h-[500px] cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=800&q=80" 
+                                 alt="Printed Pret Collection"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                 loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 flex flex-col items-center justify-end text-center z-10">
+                                <h3 class="font-playfair text-white text-2xl lg:text-3xl font-normal mb-2 tracking-wide">
+                                    Printed Pret Collection
+                                </h3>
+                                <p class="text-white text-sm mb-5 font-light">
+                                    Get 7% OFF* | Use Code: GLAM7
+                                </p>
+                                <button class="bg-white text-black px-10 py-3.5 text-sm font-semibold uppercase tracking-widest border-2 border-white transition-all duration-300 hover:bg-transparent hover:text-white">
+                                    SHOP NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 4: Classic Couture Styles -->
+                    <div class="swiper-slide">
+                        <div class="relative overflow-hidden h-[450px] lg:h-[500px] cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1594633313593-bab3825d0caf?w=800&q=80" 
+                                 alt="Classic Couture Styles"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                 loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 flex flex-col items-center justify-end text-center z-10">
+                                <h3 class="font-playfair text-white text-2xl lg:text-3xl font-normal mb-2 tracking-wide">
+                                    Classic Couture Styles
+                                </h3>
+                                <p class="text-white text-sm mb-5 font-light">
+                                    Get 7% OFF* | Use Code: GLAM7
+                                </p>
+                                <button class="bg-white text-black px-10 py-3.5 text-sm font-semibold uppercase tracking-widest border-2 border-white transition-all duration-300 hover:bg-transparent hover:text-white">
+                                    SHOP NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 5: Designer Anarkali -->
+                    <div class="swiper-slide">
+                        <div class="relative overflow-hidden h-[450px] lg:h-[500px] cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1583391733981-0704be8d9c1e?w=800&q=80" 
+                                 alt="Designer Anarkali Collection"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                 loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 flex flex-col items-center justify-end text-center z-10">
+                                <h3 class="font-playfair text-white text-2xl lg:text-3xl font-normal mb-2 tracking-wide">
+                                    Designer Anarkali
+                                </h3>
+                                <p class="text-white text-sm mb-5 font-light">
+                                    Get 7% OFF* | Use Code: GLAM7
+                                </p>
+                                <button class="bg-white text-black px-10 py-3.5 text-sm font-semibold uppercase tracking-widest border-2 border-white transition-all duration-300 hover:bg-transparent hover:text-white">
+                                    SHOP NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 6: Festive Wear -->
+                    <div class="swiper-slide">
+                        <div class="relative overflow-hidden h-[450px] lg:h-[500px] cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1610030469999-5e0e0c46c1a3?w=800&q=80" 
+                                 alt="Festive Wear Collection"
+                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                 loading="lazy">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 right-0 p-6 lg:p-10 flex flex-col items-center justify-end text-center z-10">
+                                <h3 class="font-playfair text-white text-2xl lg:text-3xl font-normal mb-2 tracking-wide">
+                                    Festive Wear
+                                </h3>
+                                <p class="text-white text-sm mb-5 font-light">
+                                    Get 7% OFF* | Use Code: GLAM7
+                                </p>
+                                <button class="bg-white text-black px-10 py-3.5 text-sm font-semibold uppercase tracking-widest border-2 border-white transition-all duration-300 hover:bg-transparent hover:text-white">
+                                    SHOP NOW
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        
+        <!-- Bridal World Section Title -->
+        <div class="text-center mt-16 lg:mt-20">
+            <h2 class="font-playfair text-3xl lg:text-4xl xl:text-5xl font-normal text-gray-900 tracking-wide">
+                Bridal World
+            </h2>
+        </div>
+    </section>
+    
+    <!-- Scroll to Top Button -->
+    <button onclick="scrollToTop()" 
+            class="fixed bottom-24 lg:bottom-32 right-6 lg:right-8 w-12 h-12 lg:w-14 lg:h-14 bg-white border-2 border-gray-300 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl hover:border-gray-400 hover:-translate-y-1 transition-all duration-300 z-50 opacity-0 invisible"
+            id="scrollTopBtn">
+        <svg class="w-5 h-5 lg:w-6 lg:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+        </svg>
+    </button>
+    
+    <!-- Fixed Action Buttons -->
+    <div class="fixed bottom-6 lg:bottom-8 right-6 lg:right-8 flex flex-col gap-3 z-50">
+        <!-- Live Chat -->
+        <button onclick="openLiveChat()" 
+                class="bg-black text-white px-5 py-3 lg:px-6 lg:py-3.5 rounded-lg flex items-center gap-2 lg:gap-3 text-xs lg:text-sm font-semibold shadow-2xl hover:-translate-x-1 hover:shadow-3xl transition-all duration-300">
+            <svg class="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            <span>Live Chat</span>
+        </button>
+        
+        <!-- Live Shopping -->
+        <button onclick="openLiveShopping()" 
+                class="bg-black text-white px-5 py-3 lg:px-6 lg:py-3.5 rounded-lg flex items-center gap-2 lg:gap-3 text-xs lg:text-sm font-semibold shadow-2xl hover:-translate-x-1 hover:shadow-3xl transition-all duration-300">
+            <svg class="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <span>Live Shopping</span>
+        </button>
+    </div>
+    
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Initialize Swiper with Custom Autoplay Delay
+        const swiper = new Swiper('.collectionsSwiper', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            
+            // Autoplay Configuration
+            autoplay: {
+                delay: 3000, // Change this value (in milliseconds): 3000 = 3 seconds
+                disableOnInteraction: false, // Continue autoplay after user interaction
+                pauseOnMouseEnter: true, // Pause when hovering
+            },
+            
+            // Speed of transition
+            speed: 600, // Smooth transition speed in milliseconds
+            
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            
+            // Responsive breakpoints
+            breakpoints: {
+                // Mobile
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                // Tablet
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 24,
+                },
+                // Desktop
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 28,
+                },
+                // Large Desktop
+                1280: {
+                    slidesPerView: 4,
+                    spaceBetween: 32,
+                }
+            }
+        });
+        
+        // Scroll to Top Function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Live Chat Function
+        function openLiveChat() {
+            alert('Live Chat feature would open here!');
+        }
+        
+        // Live Shopping Function
+        function openLiveShopping() {
+            alert('Live Shopping feature would open here!');
+        }
+        
+        // Show/Hide Scroll Button
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollBtn.classList.remove('opacity-0', 'invisible');
+                scrollBtn.classList.add('opacity-100', 'visible');
+            } else {
+                scrollBtn.classList.add('opacity-0', 'invisible');
+                scrollBtn.classList.remove('opacity-100', 'visible');
+            }
+        });
+    </script>
+</body>
+</html>
