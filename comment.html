@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Testimonials</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f8f9fa;
+            padding: 20px 0;
+        }
+
+        .testimonials-section {
+            background: white;
+            padding: 60px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #6b7280;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 0 50px;
+        }
+
+        .slider-container {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+            gap: 24px;
+        }
+
+        .testimonial-card {
+            min-width: calc(33.333% - 16px);
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0f0f0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1), 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            font-size: 4rem;
+            color: #e5e7eb;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .customer-image {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #f3f4f6;
+        }
+
+        .customer-info {
+            flex: 1;
+        }
+
+        .customer-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .customer-location {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .star-rating {
+            color: #fbbf24;
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .testimonial-text {
+            color: #4b5563;
+            line-height: 1.7;
+            font-size: 0.9375rem;
+            margin-bottom: 20px;
+        }
+
+        .purchase-info {
+            display: inline-block;
+            background: #f3f4f6;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8125rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .slider-arrow:hover {
+            background: #1a1a1a;
+            border-color: #1a1a1a;
+        }
+
+        .slider-arrow:hover svg {
+            stroke: white;
+        }
+
+        .slider-arrow svg {
+            width: 24px;
+            height: 24px;
+            stroke: #1a1a1a;
+        }
+
+        .slider-arrow.prev {
+            left: 0;
+        }
+
+        .slider-arrow.next {
+            right: 0;
+        }
+
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #1a1a1a;
+            width: 32px;
+            border-radius: 5px;
+        }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+            .testimonial-card {
+                min-width: calc(50% - 12px);
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .slider-wrapper {
+                padding: 0 40px;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .testimonials-section {
+                padding: 40px 16px;
+            }
+
+            .section-header {
+                margin-bottom: 32px;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .slider-wrapper {
+                padding: 0 35px;
+            }
+
+            .testimonial-card {
+                min-width: 100%;
+                padding: 24px;
+            }
+
+            .slider-arrow {
+                width: 40px;
+                height: 40px;
+            }
+
+            .slider-arrow svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .quote-icon {
+                font-size: 3rem;
+                top: 16px;
+                right: 20px;
+            }
+
+            .customer-image {
+                width: 48px;
+                height: 48px;
+            }
+
+            .customer-name {
+                font-size: 1rem;
+            }
+
+            .testimonial-text {
+                font-size: 0.875rem;
+            }
+        }
+
+        /* Small mobile */
+        @media (max-width: 480px) {
+            .slider-wrapper {
+                padding: 0 30px;
+            }
+
+            .testimonial-card {
+                padding: 20px;
+            }
+
+            .slider-arrow {
+                width: 36px;
+                height: 36px;
+            }
+
+            .slider-arrow svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <p class="section-subtitle">Real reviews from real customers</p>
+            </div>
+            
+            <div class="slider-wrapper">
+                <button class="slider-arrow prev" onclick="prevSlide()" aria-label="Previous testimonial">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <div class="slider-container" id="sliderContainer">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="Sarah Johnson" class="customer-image">
+                            <div class="customer-info">
+                                <h4 class="customer-name">Sarah Johnson</h4>
+                                <p class="customer-location">New York, USA</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Absolutely love my purchase! The quality is outstanding and the fit is perfect. Krambica has become my go-to store for all my fashion needs. Every piece I've ordered has exceeded my expectations!"
+                        </p>
+                        <span class="purchase-info">Purchased: Floral Summer Dress</span>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop" alt="Emily Davis" class="customer-image">
+                            <div class="customer-info">
+                                <h4 class="customer-name">Emily Davis</h4>
+                                <p class="customer-location">Los Angeles, USA</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-text">
+                            "The customer service is exceptional! Fast shipping and beautiful packaging. The clothes are even better in person than in photos. I'm so impressed with the attention to detail!"
+                        </p>
+                        <span class="purchase-info">Purchased: Designer Handbag</span>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop" alt="Jessica Martinez" class="customer-image">
+                            <div class="customer-info">
+                                <h4 class="customer-name">Jessica Martinez</h4>
+                                <p class="customer-location">Miami, USA</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Premium quality at reasonable prices. I've recommended Krambica to all my friends. The attention to detail is remarkable and the fabrics feel luxurious. Worth every penny!"
+                        </p>
+                        <span class="purchase-info">Purchased: Silk Blouse</span>
+                    </div>
+
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop" alt="Amanda White" class="customer-image">
+                            <div class="customer-info">
+                                <h4 class="customer-name">Amanda White</h4>
+                                <p class="customer-location">Chicago, USA</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-text">
+                            "I'm obsessed with everything I've bought! The styles are trendy yet timeless, and the quality is unmatched. Fast delivery and excellent customer support. Highly recommend!"
+                        </p>
+                        <span class="purchase-info">Purchased: Evening Gown</span>
+                    </div>
+
+                    <!-- Testimonial 5 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=100&h=100&fit=crop" alt="Rachel Green" class="customer-image">
+                            <div class="customer-info">
+                                <h4 class="customer-name">Rachel Green</h4>
+                                <p class="customer-location">Boston, USA</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Best online shopping experience ever! The website is easy to navigate, checkout is smooth, and my order arrived perfectly packaged. The dress fits like a dream. Will definitely shop again!"
+                        </p>
+                        <span class="purchase-info">Purchased: Maxi Dress Collection</span>
+                    </div>
+
+                    <!-- Testimonial 6 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100&h=100&fit=crop" alt="Lauren Taylor" class="customer-image">
+                            <div class="customer-info">
+                                <h4 class="customer-name">Lauren Taylor</h4>
+                                <p class="customer-location">Seattle, USA</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-text">
+                            "The fabrics are luxurious and the designs are sophisticated. I feel confident and beautiful wearing Krambica. Their attention to customer satisfaction is truly impressive!"
+                        </p>
+                        <span class="purchase-info">Purchased: Formal Blazer Set</span>
+                    </div>
+
+                    <!-- Testimonial 7 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="Michael Brown" class="customer-image">
+                            <div class="customer-info">
+                                <h4 class="customer-name">Michael Brown</h4>
+                                <p class="customer-location">Austin, USA</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Bought gifts for my wife and she absolutely loves everything! The quality exceeded our expectations. Great selection and the sizing is accurate. Five stars all the way!"
+                        </p>
+                        <span class="purchase-info">Purchased: Gift Set Collection</span>
+                    </div>
+
+                    <!-- Testimonial 8 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <div class="testimonial-header">
+                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=100&h=100&fit=crop" alt="Olivia Anderson" class="customer-image">
+                            <div class="customer-info">
+                                <h4 class="customer-name">Olivia Anderson</h4>
+                                <p class="customer-location">San Francisco, USA</p>
+                            </div>
+                        </div>
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-text">
+                            "Simply amazing! The collection is curated beautifully and every piece tells a story. The quality-to-price ratio is unbeatable. Krambica is my fashion destination now!"
+                        </p>
+                        <span class="purchase-info">Purchased: Casual Chic Bundle</span>
+                    </div>
+                </div>
+
+                <button class="slider-arrow next" onclick="nextSlide()" aria-label="Next testimonial">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="dots-container" id="dotsContainer"></div>
+        </div>
+    </section>
+
+    <script>
+        let currentIndex = 0;
+        const slider = document.getElementById('sliderContainer');
+        const cards = document.querySelectorAll('.testimonial-card');
+        const dotsContainer = document.getElementById('dotsContainer');
+        let cardsPerView = 3;
+
+        function updateCardsPerView() {
+            if (window.innerWidth <= 768) {
+                cardsPerView = 1;
+            } else if (window.innerWidth <= 1024) {
+                cardsPerView = 2;
+            } else {
+                cardsPerView = 3;
+            }
+        }
+
+        function createDots() {
+            dotsContainer.innerHTML = '';
+            const totalDots = Math.ceil(cards.length / cardsPerView);
+            
+            for (let i = 0; i < totalDots; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(i));
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function updateDots() {
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === Math.floor(currentIndex / cardsPerView));
+            });
+        }
+
+        function updateSlider() {
+            const cardWidth = cards[0].offsetWidth;
+            const gap = 24;
+            const offset = -(currentIndex * (cardWidth + gap));
+            slider.style.transform = `translateX(${offset}px)`;
+            updateDots();
+        }
+
+        function nextSlide() {
+            if (currentIndex < cards.length - cardsPerView) {
+                currentIndex++;
+                updateSlider();
+            }
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        }
+
+        function goToSlide(index) {
+            currentIndex = index * cardsPerView;
+            if (currentIndex > cards.length - cardsPerView) {
+                currentIndex = cards.length - cardsPerView;
+            }
+            updateSlider();
+        }
+
+        // Touch events for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        slider.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
+        }
+
+        // Initialize
+        updateCardsPerView();
+        createDots();
+        updateSlider();
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            const oldCardsPerView = cardsPerView;
+            updateCardsPerView();
+            
+            if (oldCardsPerView !== cardsPerView) {
+                currentIndex = 0;
+                createDots();
+                updateSlider();
+            }
+        });
+
+        // Auto-play (optional)
+        setInterval(() => {
+            if (currentIndex < cards.length - cardsPerView) {
+                nextSlide();
+            } else {
+                currentIndex = 0;
+                updateSlider();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

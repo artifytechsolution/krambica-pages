@@ -10,13 +10,12 @@
     <title>Shop Sale | KRAMBICA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
     <style>
         /* Only essential CSS that cannot be replicated with Tailwind */
         * {
             -webkit-tap-highlight-color: transparent;
         }
-        
+       
         /* Safe area insets for iOS devices */
         .safe-area-bottom {
             padding-bottom: env(safe-area-inset-bottom);
@@ -24,7 +23,7 @@
         .safe-area-top {
             padding-top: env(safe-area-inset-top);
         }
-        
+       
         /* Animations that require @keyframes */
         @keyframes slideInRight {
             from {
@@ -36,7 +35,6 @@
                 opacity: 1;
             }
         }
-
         @keyframes slideOutRight {
             from {
                 transform: translateX(0);
@@ -47,7 +45,6 @@
                 opacity: 0;
             }
         }
-
         @keyframes pulse {
             0%, 100% {
                 opacity: 1;
@@ -56,20 +53,33 @@
                 opacity: 0.5;
             }
         }
-
         .toast-notification {
             animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-
         .toast-notification.removing {
             animation: slideOutRight 0.3s ease-in;
         }
-
         .notification-badge.pulse {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
-    </style>
+        /* ---------- VIDEO AUTOPLAY ON SCROLL ---------- */
+        .product-video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity .5s;
+        }
+        .product-card:hover .product-video,
+        .product-card.video-visible .product-video { opacity: 1; }
 
+        .product-card .product-image { transition: opacity .5s; }
+        .product-card:hover .product-image,
+        .product-card.video-visible .product-image { opacity: 0; }
+        /* --------------------------------------------- */
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -94,7 +104,6 @@
 <body class="font-sans bg-gray-50 min-h-screen overflow-x-hidden box-border">
     <!-- Toast Notification Container -->
     <div id="toast-container" class="fixed top-24 right-5 z-[10000]"></div>
-
     <!-- Notification Popup -->
     <div id="notification-popup" class="fixed top-20 right-5 w-[400px] max-h-[600px] bg-white rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.3)] z-[9998] opacity-0 -translate-y-5 scale-95 transition-all duration-300 ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] pointer-events-none overflow-hidden max-sm:right-2.5 max-sm:left-2.5 max-sm:w-auto max-sm:top-[70px]">
         <div class="bg-gradient-to-r from-[#2E6A64] to-[#3a8077] text-white px-5 py-4 font-semibold flex justify-between items-center">
@@ -121,7 +130,6 @@
             </div>
         </div>
     </div>
-
     <!-- Search Overlay -->
     <div id="searchOverlay" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[9999] hidden items-start justify-center pt-20" onclick="closeSearch(event)">
         <div class="bg-white rounded-3xl w-[95%] max-w-3xl max-h-[80vh] overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.3)]" onclick="event.stopPropagation()">
@@ -144,7 +152,6 @@
                         </svg>
                     </button>
                 </div>
-
                 <div class="flex flex-wrap gap-2">
                     <div class="inline-flex gap-2 px-5 py-2.5 border-2 border-gray-200 rounded-[25px] text-sm font-semibold cursor-pointer transition-all duration-300 bg-gradient-to-r from-[#2E6A64] to-[#3a8077] text-white border-[#2E6A64]" onclick="filterByCategory('all', this)" data-category="all">
                         <span>All</span>
@@ -163,11 +170,9 @@
                     </div>
                 </div>
             </div>
-
             <div class="px-6 py-0 max-h-[calc(80vh-150px)] overflow-y-auto" id="searchResults"></div>
         </div>
     </div>
-
     <!-- Top Banner -->
    <div id="top-banner" class=" from-primary to-teal-600 text-gray-800 text-center py-3 px-4 relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
@@ -188,11 +193,11 @@
     <header class="hidden md:block sticky top-0 z-50">
         <div class="bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                
+               
                 <!-- Top Section -->
                 <div class="flex justify-between items-center py-6">
                     <div class="w-32 lg:w-40"></div>
-                    
+                   
                     <a href="index.html" class="flex-shrink-0">
                         <div class="text-center">
                             <h1 class="logo-font text-4xl lg:text-5xl font-semibold text-red-900 relative inline-block">
@@ -201,7 +206,6 @@
                             </h1>
                         </div>
                     </a>
-
                     <!-- Right Icons with Notification Bell -->
                     <div class="flex items-center space-x-4">
                         <button onclick="openSearch()" class="p-2 hover:scale-110 transition-transform" aria-label="Search">
@@ -209,27 +213,24 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
                         </button>
-
                         <button onclick="window.location.href='profile.html'" class="p-2 hover:scale-110 transition-transform" aria-label="Account">
                             <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                             </svg>
                         </button>
-
                         <button onclick="toggleNotificationPopup()" class="relative p-2 hover:scale-110 transition-transform" aria-label="Notifications">
                             <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                             </svg>
                             <span id="notification-badge" class="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] h-[18px] flex items-center justify-center notification-badge pulse hidden">0</span>
                         </button>
-                        
+                       
                         <button onclick="window.location.href='wishlist.html'" class="relative p-2 hover:scale-110 transition-transform" aria-label="Wishlist">
                             <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                             </svg>
                             <span id="wishlist-count" class="absolute -top-1 -right-1 bg-red-900 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full font-medium text-[10px]">0</span>
                         </button>
-
                         <button onclick="window.location.href='cart.html'" class="relative p-2 hover:scale-110 transition-transform" aria-label="Cart">
                             <svg class="w-5 h-5 text-red-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -238,7 +239,6 @@
                         </button>
                     </div>
                 </div>
-
                 <!-- Desktop Navigation Menu -->
                 <nav class="border-t border-gray-100">
                     <div class="flex justify-center items-center space-x-8 lg:space-x-12 py-4">
@@ -262,11 +262,9 @@
                         </a>
                     </div>
                 </nav>
-
             </div>
         </div>
     </header>
-
     <!-- Mobile Header -->
     <div class="md:hidden sticky top-0 bg-white shadow-md z-50 border-b border-gray-200">
         <div class="flex items-center justify-between h-16 px-3">
@@ -279,35 +277,34 @@
                     </div>
                 </div>
             </a>
-            
+           
             <div class="flex items-center gap-1.5">
                 <button onclick="openSearch()" aria-label="Search" class="flex items-center justify-center w-9 h-9 rounded-full text-gray-700 hover:bg-red-50 active:opacity-70 active:scale-95 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </button>
-
                 <button onclick="toggleNotificationPopup()" aria-label="Notifications" class="relative flex items-center justify-center w-9 h-9 rounded-full text-gray-700 active:opacity-70 active:scale-95 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
                     </svg>
                     <span id="mobile-notification-badge" class="absolute -top-1 -right-1 bg-gradient-to-br from-red-500 to-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] h-[18px] flex items-center justify-center notification-badge pulse hidden">0</span>
                 </button>
-                
+               
                 <button onclick="window.location.href='wishlist.html'" aria-label="Wishlist" class="relative flex items-center justify-center w-9 h-9 rounded-full text-gray-700 active:opacity-70 active:scale-95 transition-all">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                     <span id="mobile-wishlist-count" class="absolute -top-0.5 -right-0.5 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[9px] w-4 h-4 flex items-center justify-center rounded-full font-bold shadow-md">0</span>
                 </button>
-                
+               
                 <button onclick="window.location.href='cart.html'" aria-label="Cart" class="relative flex items-center justify-center w-10 h-10 rounded-full text-gray-700 active:opacity-70 active:scale-95 transition-all">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
                     </svg>
                     <span id="mobile-cart-count" class="absolute -top-0.5 -right-0.5 bg-gradient-to-br from-red-500 to-pink-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold shadow-md">3</span>
                 </button>
-                
+               
                 <button id="mobile-menu-toggle-btn" onclick="openMobileMenu()" class="flex items-center justify-center w-9 h-9 rounded-full text-gray-700 active:opacity-70 active:scale-95 transition-all" aria-label="Menu">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
@@ -316,7 +313,6 @@
             </div>
         </div>
     </div>
-
     <!-- Mobile Menu Drawer -->
     <div id="mobile-menu-drawer" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeMobileMenu()"></div>
@@ -329,7 +325,7 @@
                     </svg>
                 </button>
             </div>
-            
+           
             <div class="p-6 space-y-1">
                 <a href="index.html" class="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-900 rounded-xl transition-all font-semibold">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -376,18 +372,16 @@
             </div>
         </div>
     </div>
-
     <!-- Main Content with Sidebar Layout (Desktop) -->
     <div class="max-w-7xl mx-auto px-3 md:px-4 lg:px-8 py-4 md:py-8 lg:py-12 mb-16 md:mb-0">
         <div class="flex flex-col lg:flex-row gap-4 md:gap-8">
-            
+           
             <!-- Sidebar Filters (Desktop Only) -->
             <aside class="hidden lg:block lg:w-64 flex-shrink-0">
                 <div class="sticky top-32 space-y-6">
                     <div class="pb-4 border-b border-gray-200">
                         <h2 class="text-xl font-bold text-gray-900">Refine By</h2>
                     </div>
-
                     <div class="pb-6 border-b border-gray-200">
                         <h3 class="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Category</h3>
                         <div class="space-y-3">
@@ -413,7 +407,6 @@
                             </label>
                         </div>
                     </div>
-
                     <div class="pb-6 border-b border-gray-200">
                         <h3 class="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Price Range</h3>
                         <div class="space-y-3">
@@ -439,7 +432,6 @@
                             </label>
                         </div>
                     </div>
-
                     <div class="pb-6 border-b border-gray-200">
                         <h3 class="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Discount</h3>
                         <div class="space-y-3">
@@ -457,13 +449,11 @@
                             </label>
                         </div>
                     </div>
-
                     <button onclick="clearAllFilters()" class="w-full py-3 border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white font-semibold rounded-lg transition-all duration-300">
                         Clear All Filters
                     </button>
                 </div>
             </aside>
-
             <!-- Main Products Area -->
             <main class="flex-1 min-w-0">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 md:gap-4 mb-4 md:mb-8">
@@ -473,7 +463,6 @@
                         </p>
                     </div>
                 </div>
-
                 <!-- Category Slider (Mobile Only) -->
                 <div class="lg:hidden mb-6 bg-white rounded-lg p-4 shadow-sm">
                     <div class="flex overflow-x-auto scroll-snap-x scroll-snap-mandatory [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden gap-3 p-1" id="category-slider">
@@ -499,12 +488,10 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Products Grid -->
                 <div id="products-container" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 md:gap-6 mb-8 md:mb-12">
                     <!-- Products will be inserted here -->
                 </div>
-
                 <!-- Pagination - Desktop Only -->
                 <div class="hidden md:flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 border-t border-gray-200">
                     <button id="prev-btn" onclick="changePage(-1)" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors flex items-center gap-2">
@@ -513,9 +500,9 @@
                         </svg>
                         Previous
                     </button>
-                    
+                   
                     <div id="page-numbers" class="flex gap-2"></div>
-                    
+                   
                     <button id="next-btn" onclick="changePage(1)" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed font-medium transition-colors flex items-center gap-2">
                         Next
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -526,10 +513,9 @@
             </main>
         </div>
     </div>
-
     <!-- Floating Filter Button (Mobile Only) - Positioned above footer on LEFT side -->
-    <button 
-        id="floating-filter-btn" 
+    <button
+        id="floating-filter-btn"
         class="lg:hidden fixed left-4 z-40 bg-gradient-to-r from-primary to-teal-600 text-white px-6 py-3.5 rounded-full shadow-2xl flex items-center gap-2 hover:shadow-xl transition-all duration-300 active:scale-95 font-semibold"
         style="bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);"
         onclick="document.getElementById('mobile-filter-modal').classList.remove('hidden'); document.body.style.overflow = 'hidden';"
@@ -539,7 +525,6 @@
         </svg>
         <span class="text-sm font-bold">Filters</span>
     </button>
-
     <!-- Mobile Filter Modal -->
     <div id="mobile-filter-modal" class="hidden fixed inset-0 bg-black/50 z-50 lg:hidden">
         <div class="absolute inset-x-0 bottom-0 max-h-[85vh] bg-white rounded-t-3xl shadow-xl overflow-y-auto">
@@ -553,7 +538,6 @@
                     </button>
                 </div>
             </div>
-
             <div class="p-4 md:p-6 space-y-6">
                 <div class="pb-6 border-b border-gray-200">
                     <h3 class="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Category</h3>
@@ -580,7 +564,6 @@
                         </label>
                     </div>
                 </div>
-
                 <div class="pb-6 border-b border-gray-200">
                     <h3 class="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Price Range</h3>
                     <div class="space-y-3">
@@ -606,7 +589,6 @@
                         </label>
                     </div>
                 </div>
-
                 <div class="pb-6">
                     <h3 class="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">Discount</h3>
                     <div class="space-y-3">
@@ -625,7 +607,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="sticky bottom-0 bg-white border-t border-gray-200 p-4 md:p-6 space-y-3 safe-area-bottom">
                 <button onclick="clearAllFilters()" class="w-full py-3 md:py-3.5 border-2 border-gray-900 text-gray-900 font-semibold rounded-lg hover:bg-gray-100 transition-colors text-sm md:text-base active:opacity-70 active:scale-95">
                     Clear All
@@ -636,7 +617,6 @@
             </div>
         </div>
     </div>
-
     <!-- Footer -->
     <footer class="hidden md:block bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white pt-12 md:pt-16 pb-8 md:pb-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -669,7 +649,6 @@
                         </a>
                     </div>
                 </div>
-
                 <div>
                     <h3 class="text-base md:text-lg font-bold mb-4 md:mb-6 text-white">Quick Links</h3>
                     <ul class="space-y-2 md:space-y-3">
@@ -680,7 +659,6 @@
                         <li><a href="contact.html" class="text-sm md:text-base text-gray-300 hover:text-primary transition-colors duration-300">Contact</a></li>
                     </ul>
                 </div>
-
                 <div>
                     <h3 class="text-base md:text-lg font-bold mb-4 md:mb-6 text-white">Customer Service</h3>
                     <ul class="space-y-2 md:space-y-3">
@@ -691,7 +669,6 @@
                         <li><a href="#" class="text-sm md:text-base text-gray-300 hover:text-primary transition-colors duration-300">FAQs</a></li>
                     </ul>
                 </div>
-
                 <div>
                     <h3 class="text-base md:text-lg font-bold mb-4 md:mb-6 text-white">Get In Touch</h3>
                     <ul class="space-y-3 md:space-y-4">
@@ -717,7 +694,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="border-t border-gray-700 pt-6 md:pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4">
                     <p class="text-gray-400 text-xs md:text-sm text-center md:text-left">
@@ -731,7 +707,6 @@
             </div>
         </div>
     </footer>
-
     <!-- Mobile Bottom Navigation -->
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t-2 border-gray-200 shadow-lg z-50 safe-area-bottom">
         <div class="flex justify-around items-center py-2">
@@ -767,7 +742,6 @@
             </a>
         </div>
     </nav>
-
     <script>
         const saleProducts = [
             { id: 1, name: "Floral Summer Dress", originalPrice: 24899, salePrice: 7469, discount: 70, image: "https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/7670218/7670218-uhd_2732_1440_25fps.mp4", category: "dresses", description: "Beautiful floral print dress" },
@@ -789,51 +763,47 @@
             { id: 17, name: "Casual T-Shirt", originalPrice: 4979, salePrice: 2489, discount: 50, image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/8127396/8127396-uhd_2732_1440_25fps.mp4", category: "tops", description: "Comfortable cotton tee" },
             { id: 18, name: "Sunglasses Set", originalPrice: 13279, salePrice: 6639, discount: 50, image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&h=800&fit=crop", video: "https://videos.pexels.com/video-files/8127401/8127401-uhd_2732_1440_25fps.mp4", category: "accessories", description: "Trendy sunglasses" }
         ];
-
         let currentPage = 1;
         const productsPerPage = 9;
         let filteredProducts = [...saleProducts];
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
-
         function updateCounts() {
             const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             const wishlistCount = wishlist.length;
-            
+           
             document.querySelectorAll('#cart-count, #mobile-cart-count').forEach(el => el.textContent = cartCount);
             document.querySelectorAll('#wishlist-count, #mobile-wishlist-count').forEach(el => el.textContent = wishlistCount);
         }
-
         function renderProductCard(product) {
             const isInWishlist = wishlist.some(item => item.id === product.id);
             const isInCart = cart.some(item => item.id === product.id);
-            
+           
             return `
-                <div class="group bg-white  overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative">
+                <div class="product-card group bg-white overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative">
                     <div class="relative overflow-hidden aspect-[3/4] bg-gray-100">
-                        <img 
-                            src="${product.image}" 
+                        <img
+                            src="${product.image}"
                             alt="${product.name}"
-                            class="w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0"
+                            class="product-image w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0"
                             loading="lazy"
                         />
-                        <video 
-                            class="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                            muted 
-                            loop 
+                        <video
+                            class="product-video absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            muted
+                            loop
                             playsinline
-                            onmouseenter="this.play()" 
-                            onmouseleave="this.pause(); this.currentTime=0;"
+                            preload="metadata"
                         >
                             <source src="${product.video}" type="video/mp4">
                         </video>
-                        
+                       
                         <div class="absolute top-3 left-3 bg-gradient-to-r from-red-500 to-pink-600 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg z-10">
                             ${product.discount}% OFF
                         </div>
-                        
-                        <button 
-                            onclick="toggleWishlist(${product.id})" 
+                       
+                        <button
+                            onclick="toggleWishlist(${product.id})"
                             class="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-lg hover:scale-110 transition-all z-10 active:scale-95"
                             aria-label="Add to wishlist"
                         >
@@ -842,18 +812,18 @@
                             </svg>
                         </button>
                     </div>
-                    
+                   
                     <div class="p-4">
                         <h3 class="font-semibold text-gray-900 mb-2 text-sm md:text-base line-clamp-2 min-h-[2.5rem] leading-tight">${product.name}</h3>
                         <p class="text-xs text-gray-500 mb-3 line-clamp-1">${product.description}</p>
-                        
+                       
                         <div class="flex items-center gap-2 mb-3">
                             <span class="text-lg md:text-xl font-bold text-gray-900">₹${product.salePrice.toLocaleString('en-IN')}</span>
                             <span class="text-sm text-gray-400 line-through">₹${product.originalPrice.toLocaleString('en-IN')}</span>
                         </div>
                         <a href="product-details.html?id=${product.id}" class="block mb-3 text-sm text-primary hover:underline">
-                        <button 
-                            onclick="addToCart(${product.id})" 
+                        <button
+                            onclick="addToCart(${product.id})"
                             class="w-full hidden md:block py-2.5 md:py-3 bg-gradient-to-r from-primary to-teal-600 text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg active:scale-95 text-sm md:text-base"
                         >
                            Buy now
@@ -863,84 +833,78 @@
                 </div>
             `;
         }
-
         function renderProducts() {
             const start = (currentPage - 1) * productsPerPage;
             const end = start + productsPerPage;
             const productsToShow = filteredProducts.slice(start, end);
-            
+           
             const container = document.getElementById('products-container');
             container.innerHTML = productsToShow.map(product => renderProductCard(product)).join('');
-            
+           
             document.getElementById('product-count').textContent = filteredProducts.length;
             renderPagination();
         }
-
         function renderPagination() {
             const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
             const pageNumbers = document.getElementById('page-numbers');
-            
+           
             if (!pageNumbers) return;
-            
+           
             pageNumbers.innerHTML = '';
-            
+           
             for (let i = 1; i <= totalPages; i++) {
                 const button = document.createElement('button');
                 button.textContent = i;
                 button.className = `px-4 py-2 rounded-lg font-medium transition-all ${
-                    i === currentPage 
-                        ? 'bg-primary text-white shadow-md' 
+                    i === currentPage
+                        ? 'bg-primary text-white shadow-md'
                         : 'border border-gray-300 hover:bg-gray-50'
                 }`;
                 button.onclick = () => goToPage(i);
                 pageNumbers.appendChild(button);
             }
-            
+           
             document.getElementById('prev-btn').disabled = currentPage === 1;
             document.getElementById('next-btn').disabled = currentPage === totalPages;
         }
-
         function changePage(delta) {
             const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
             const newPage = currentPage + delta;
-            
+           
             if (newPage >= 1 && newPage <= totalPages) {
                 currentPage = newPage;
                 renderProducts();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
         }
-
         function goToPage(page) {
             currentPage = page;
             renderProducts();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-
         function applyFilters() {
-            const category = document.querySelector('input[name="category"]:checked')?.value || 
-                           document.querySelector('input[name="mobile-category"]:checked')?.value || 
+            const category = document.querySelector('input[name="category"]:checked')?.value ||
+                           document.querySelector('input[name="mobile-category"]:checked')?.value ||
                            'all';
-            const priceRange = document.querySelector('input[name="price"]:checked')?.value || 
-                              document.querySelector('input[name="mobile-price"]:checked')?.value || 
+            const priceRange = document.querySelector('input[name="price"]:checked')?.value ||
+                              document.querySelector('input[name="mobile-price"]:checked')?.value ||
                               'all';
-            
+           
             filteredProducts = saleProducts.filter(product => {
                 let matchesCategory = category === 'all' || product.category === category;
                 let matchesPrice = true;
-                
+               
                 if (priceRange !== 'all') {
                     const [min, max] = priceRange.split('-').map(Number);
                     matchesPrice = product.salePrice >= min && (!max || product.salePrice <= max);
                 }
-                
+               
                 return matchesCategory && matchesPrice;
             });
-            
+           
             currentPage = 1;
             renderProducts();
         }
-
         function clearAllFilters() {
             document.querySelectorAll('input[name="category"], input[name="mobile-category"]').forEach(input => {
                 input.checked = input.value === 'all';
@@ -951,7 +915,7 @@
             document.querySelectorAll('input[type="checkbox"]').forEach(input => {
                 input.checked = false;
             });
-            
+           
             document.querySelectorAll('#category-slider > div').forEach((item, index) => {
                 const img = item.querySelector('img');
                 if (index === 0) {
@@ -962,57 +926,53 @@
                     img.classList.add('border-transparent');
                 }
             });
-            
+           
             applyFilters();
         }
-
         function filterByCategorySlider(category, element) {
             document.querySelectorAll('#category-slider > div img').forEach(img => {
                 img.classList.remove('border-[#2E6A64]');
                 img.classList.add('border-transparent');
             });
-            
+           
             element.querySelector('img').classList.add('border-[#2E6A64]');
             element.querySelector('img').classList.remove('border-transparent');
-            
+           
             filteredProducts = category === 'all' ? [...saleProducts] : saleProducts.filter(p => p.category === category);
             currentPage = 1;
             renderProducts();
         }
-
         function filterByCategory(category, element) {
             document.querySelectorAll('[data-category]').forEach(el => {
                 el.classList.remove('bg-gradient-to-r', 'from-[#2E6A64]', 'to-[#3a8077]', 'text-white', 'border-[#2E6A64]');
                 el.classList.add('bg-white', 'hover:bg-gray-50');
             });
-            
+           
             element.classList.add('bg-gradient-to-r', 'from-[#2E6A64]', 'to-[#3a8077]', 'text-white', 'border-[#2E6A64]');
             element.classList.remove('bg-white', 'hover:bg-gray-50');
-            
+           
             const searchInput = document.getElementById('searchInput');
             handleSearch(searchInput.value, category);
         }
-
         function addToCart(productId) {
             const product = saleProducts.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
-            
+           
             if (existingItem) {
                 existingItem.quantity++;
             } else {
                 cart.push({ ...product, quantity: 1 });
             }
-            
+           
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCounts();
             renderProducts();
             showToast(`${product.name} added to cart!`, 'success');
         }
-
         function toggleWishlist(productId) {
             const product = saleProducts.find(p => p.id === productId);
             const index = wishlist.findIndex(item => item.id === productId);
-            
+           
             if (index > -1) {
                 wishlist.splice(index, 1);
                 showToast(`${product.name} removed from wishlist`, 'info');
@@ -1020,20 +980,19 @@
                 wishlist.push(product);
                 showToast(`${product.name} added to wishlist!`, 'success');
             }
-            
+           
             localStorage.setItem('wishlist', JSON.stringify(wishlist));
             updateCounts();
             renderProducts();
         }
-
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            
-            const bgColor = type === 'success' ? 'bg-gradient-to-r from-green-500 to-emerald-600' : 
-                           type === 'error' ? 'bg-gradient-to-r from-red-500 to-pink-600' : 
+           
+            const bgColor = type === 'success' ? 'bg-gradient-to-r from-green-500 to-emerald-600' :
+                           type === 'error' ? 'bg-gradient-to-r from-red-500 to-pink-600' :
                            'bg-gradient-to-r from-blue-500 to-cyan-600';
-            
+           
             toast.className = `toast-notification mb-3 ${bgColor} text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 min-w-[300px] max-w-[400px]`;
             toast.innerHTML = `
                 <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1046,35 +1005,34 @@
                     </svg>
                 </button>
             `;
-            
+           
             container.appendChild(toast);
-            
+           
             setTimeout(() => {
                 toast.classList.add('removing');
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
-
         function handleSearch(query, category = 'all') {
             const searchResults = document.getElementById('searchResults');
-            
+           
             if (!query) {
                 searchResults.innerHTML = '<div class="py-8 text-center text-gray-400">Start typing to search...</div>';
                 return;
             }
-            
+           
             const results = saleProducts.filter(product => {
                 const matchesQuery = product.name.toLowerCase().includes(query.toLowerCase()) ||
                                    product.description.toLowerCase().includes(query.toLowerCase());
                 const matchesCategory = category === 'all' || product.category === category;
                 return matchesQuery && matchesCategory;
             });
-            
+           
             if (results.length === 0) {
                 searchResults.innerHTML = '<div class="py-8 text-center text-gray-400">No products found</div>';
                 return;
             }
-            
+           
             searchResults.innerHTML = results.map(product => `
                 <div class="flex gap-4 p-4 hover:bg-gray-50 rounded-xl transition-colors cursor-pointer border-b border-gray-100 last:border-0" onclick="window.location.href='product.html?id=${product.id}'">
                     <img src="${product.image}" alt="${product.name}" class="w-20 h-20 object-cover rounded-lg flex-shrink-0">
@@ -1090,7 +1048,6 @@
                 </div>
             `).join('');
         }
-
         function openSearch() {
             const overlay = document.getElementById('searchOverlay');
             overlay.classList.remove('hidden');
@@ -1098,7 +1055,6 @@
             document.getElementById('searchInput').focus();
             document.body.style.overflow = 'hidden';
         }
-
         function closeSearch(event) {
             if (event && event.target !== event.currentTarget) return;
             const overlay = document.getElementById('searchOverlay');
@@ -1108,7 +1064,6 @@
             document.getElementById('searchResults').innerHTML = '';
             document.body.style.overflow = '';
         }
-
         function openMobileMenu() {
             const drawer = document.getElementById('mobile-menu-drawer');
             drawer.classList.remove('hidden');
@@ -1117,7 +1072,6 @@
             }, 10);
             document.body.style.overflow = 'hidden';
         }
-
         function closeMobileMenu() {
             const drawer = document.getElementById('mobile-menu-drawer');
             drawer.querySelector('div:last-child').classList.add('translate-x-full');
@@ -1126,43 +1080,66 @@
                 document.body.style.overflow = '';
             }, 300);
         }
-
         document.getElementById('close-filter-modal')?.addEventListener('click', () => {
             document.getElementById('mobile-filter-modal').classList.add('hidden');
             document.body.style.overflow = '';
         });
-
         document.getElementById('mobile-filter-modal')?.addEventListener('click', (e) => {
             if (e.target.id === 'mobile-filter-modal') {
                 document.getElementById('mobile-filter-modal').classList.add('hidden');
                 document.body.style.overflow = '';
             }
         });
-
         function toggleNotificationPopup() {
             const popup = document.getElementById('notification-popup');
             const isVisible = !popup.classList.contains('opacity-0');
-            
+           
             if (isVisible) {
                 popup.classList.add('opacity-0', '-translate-y-5', 'scale-95', 'pointer-events-none');
             } else {
                 popup.classList.remove('opacity-0', '-translate-y-5', 'scale-95', 'pointer-events-none');
             }
         }
-
         document.addEventListener('click', (e) => {
             const popup = document.getElementById('notification-popup');
             const notificationBtns = document.querySelectorAll('[onclick="toggleNotificationPopup()"]');
-            
+           
             if (!popup.contains(e.target) && ![...notificationBtns].some(btn => btn.contains(e.target))) {
                 popup.classList.add('opacity-0', '-translate-y-5', 'scale-95', 'pointer-events-none');
             }
         });
+        /* ============================================================= */
+        /*               VIDEO AUTOPLAY / PAUSE ON SCROLL                */
+        /* ============================================================= */
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach(entry=>{
+                const card = entry.target;
+                const video = card.querySelector('.product-video');
+                if(!video) return;
 
+                if(entry.isIntersecting && entry.intersectionRatio > 0.6){
+                    // Card is >60% visible → start timer for video
+                    setTimeout(()=>{
+                        card.classList.add('video-visible');
+                        video.play().catch(()=>{});
+                    },3000); // 3000ms delay
+                }else{
+                    // Card leaves the viewport → pause & reset
+                    card.classList.remove('video-visible');
+                    video.pause();
+                    video.currentTime = 0;
+                }
+            });
+        },{ threshold: [0,0.6,1] });
+
+        function observeVideos(){
+            document.querySelectorAll('.product-card').forEach(card=>observer.observe(card));
+        }
         document.addEventListener('DOMContentLoaded', () => {
             updateCounts();
             renderProducts();
-            
+            observeVideos();               // <-- start scroll-based video control
+           
             const currentPath = window.location.pathname;
             document.querySelectorAll('[data-nav]').forEach(link => {
                 if (link.getAttribute('data-nav') === 'shop' || currentPath.includes('sale')) {
@@ -1170,7 +1147,12 @@
                 }
             });
         });
-
+        /* Re-observe after pagination / filter changes */
+        const origRender = renderProducts;
+        renderProducts = function(){
+            origRender.apply(this,arguments);
+            setTimeout(observeVideos,100);   // tiny delay ensures DOM is ready
+        };
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 closeSearch();
@@ -1178,7 +1160,7 @@
                 document.getElementById('mobile-filter-modal')?.classList.add('hidden');
                 document.body.style.overflow = '';
             }
-            
+           
             if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                 e.preventDefault();
                 openSearch();
